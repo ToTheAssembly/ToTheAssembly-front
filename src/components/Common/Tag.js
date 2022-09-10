@@ -12,7 +12,7 @@ const TagText = styled.div`
 `;
 
 const Tag = ({hashtag}) => {
-
+  // hashtag: string
   return (
     <TagText>
       #{hashtag}

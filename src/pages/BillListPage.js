@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import BillCard from '../components/BillCard.js';
+import BillCard from '../components/Common/BillCard.js';
 
 const BillPageContainer = styled.div`
   margin: 0 30px;

@@ -1,5 +1,5 @@
 import React from 'react';
-import Category from "../components/Category.js";
+import Category from "./Category.js";
 import { Card } from 'react-bootstrap';
 import styled from "styled-components";
 import Tag from './Tag.js';
