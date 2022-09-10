@@ -1,10 +1,28 @@
 import React from 'react';
+import styled from "styled-components";
 
-const Category = () => {
+const CategoryBox = styled.div`
+  float: left;
+  width: auto;
+  display: inline-block;
+  justify-content: center;
+  background: #CCD4E4;
+  padding: 3px 30px;
+  font-size: 12px;
+`;
+
+const CategoryText = styled.div`
+  display: inline-block;
+  font-size: 20dp
+`;
+
+const Category = ({category}) => {
   return (
-    <div>
-      
-    </div>
+    <CategoryBox>
+      <CategoryText>
+        {category}
+      </CategoryText>
+    </CategoryBox>
   )
 }
 
