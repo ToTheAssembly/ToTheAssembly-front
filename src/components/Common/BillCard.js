@@ -24,12 +24,12 @@ const ContentContainer = styled.div`
 `;
 
 const Proposer = styled.div`
-  font-size: 12px;
   margin-left: auto;
+  padding: 3px 30px;
   color: white;
   background: #49446B;
-  padding: 3px 30px;
-  font-family: Pretendard
+  font-size: 12px;
+  font-family: Pretendard;
 `;
 
 const BillTitle = styled.div`

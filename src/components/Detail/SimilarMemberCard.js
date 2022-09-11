@@ -23,6 +23,11 @@ const TagBox = styled.div`
   font-family: Pretendard
 `;
 
+const Summary = styled.div`
+  color: white;
+  font-size: 13px;
+  font-family: Pretendard;
+`;
 
 const SimilarMemberCard = ({member}) => {
   // member: 국회의원의 정보(json)
@@ -31,7 +36,7 @@ const SimilarMemberCard = ({member}) => {
       <MemberContainer>
         <MemberCard  />
           <ContentBox>
-            <div style={{color: 'white', fontSize: '13px', fontFamily: 'Pretendard'}}>자원의 절약과 재활용촉진에 관한 법률 일부개정법률안</div>
+            <Summary>자원의 절약과 재활용촉진에 관한 법률 일부개정법률안</Summary>
             <TagBox>
               <Tag hashtag={"태그"} />
               <Tag hashtag={"태그"} />

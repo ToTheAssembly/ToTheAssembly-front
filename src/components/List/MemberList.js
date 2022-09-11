@@ -8,8 +8,8 @@ const MemberContainer = styled.div`
   flex-direction: row;
   justify-content:  space-between;
   align-items: center;
-  background: #7A7398;
   padding: 20px;
+  background: #7A7398;
 `;
 
 const MemberTitle = styled.div`

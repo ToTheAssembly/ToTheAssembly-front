@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 const TagText = styled.div`
   display: flex;
-  color: #779BE0;
+  margin: 0 1px;
   padding: 0.5px 5px;
-  font-size: 13px;
+  color: #779BE0;
   background: white;
   border-radius: 3px;
-  margin: 0 1px;
+  font-size: 13px;
   font-family: Pretendard
 `;
 
