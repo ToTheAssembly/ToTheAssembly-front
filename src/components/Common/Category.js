@@ -13,7 +13,8 @@ const CategoryBox = styled.div`
 
 const CategoryText = styled.div`
   display: inline-block;
-  font-size: 20dp
+  font-size: 13px;
+  font-family: Pretendard
 `;
 
 const Category = ({category}) => {

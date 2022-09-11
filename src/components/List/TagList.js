@@ -15,6 +15,7 @@ const TagTitle = styled.div`
   margin: 40px 0 10px 0;
   color: #49446B;
   font-size: 15px;
+  font-family: Pretendard;
 `;
 
 const TagList = ({tagList}) => {

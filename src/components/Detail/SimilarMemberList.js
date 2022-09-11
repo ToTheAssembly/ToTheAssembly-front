@@ -13,7 +13,7 @@ const SimilarMemberList = () => {
   // member: 국회의원의 정보(json), 숫자는 임시로 넣음
   return (
     <div>
-      <div style={{fontWeight: 700, color: '#49446B', fontSize: '15px', margin: '30px 0 10px 5px'}}>유사한 의안을 발의한 국회의원</div>
+      <div style={{fontWeight: 700, color: '#49446B', fontSize: '15px', margin: '30px 0 10px 5px', fontFamily:'Pretendard'}}>유사한 의안을 발의한 국회의원</div>
       <MemberContainer>
           <Row>
             <Col>

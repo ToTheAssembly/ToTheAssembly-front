@@ -10,7 +10,7 @@ const BillContainer = styled.div`
 const SimilarBillList = () => {
   return (
     <div>
-      <div style={{fontWeight: 700, color: '#49446B', fontSize: '15px', margin: '30px 0 10px 5px'}}>유사한 의안</div>
+      <div style={{fontWeight: 700, color: '#49446B', fontSize: '15px', margin: '30px 0 10px 5px', fontFamily: 'Pretendard'}}>유사한 의안</div>
       <BillContainer>
         <BillCard />
         <BillCard />

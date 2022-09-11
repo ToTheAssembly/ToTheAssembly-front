@@ -9,6 +9,7 @@ const TagText = styled.div`
   background: white;
   border-radius: 3px;
   margin: 0 1px;
+  font-family: Pretendard
 `;
 
 const Tag = ({hashtag}) => {

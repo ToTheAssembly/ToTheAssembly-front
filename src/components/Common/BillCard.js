@@ -29,14 +29,17 @@ const Proposer = styled.div`
   color: white;
   background: #49446B;
   padding: 3px 30px;
+  font-family: Pretendard
 `;
 
 const BillTitle = styled.div`
   font-size: 16px;
+  font-family: Pretendard
 `;
 
 const BillContent = styled.div`
   font-size: 12px;
+  font-family: Pretendard
 `;
 
 

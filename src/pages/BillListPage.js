@@ -19,6 +19,7 @@ const SelectSortContaier = styled.div`
   justyfy-content: center;
   align-items: center;
   margin: 20px 0;
+  font-family: Pretendard;
 `;
 
 const SelectSortBox = styled.div`

@@ -20,6 +20,7 @@ const TagBox = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 15px;
+  font-family: Pretendard
 `;
 
 
@@ -30,7 +31,7 @@ const SimilarMemberCard = ({member}) => {
       <MemberContainer>
         <MemberCard  />
           <ContentBox>
-            <div style={{color: 'white', fontSize: '13px'}}>자원의 절약과 재활용촉진에 관한 법률 일부개정법률안</div>
+            <div style={{color: 'white', fontSize: '13px', fontFamily: 'Pretendard'}}>자원의 절약과 재활용촉진에 관한 법률 일부개정법률안</div>
             <TagBox>
               <Tag hashtag={"태그"} />
               <Tag hashtag={"태그"} />

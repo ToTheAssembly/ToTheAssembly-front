@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import { Container, Row, Col  } from 'react-bootstrap';
+import { Row, Col  } from 'react-bootstrap';
 import Category from '../Common/Category';
 import Tag from '../Common/Tag';
 
@@ -14,6 +14,7 @@ const HeaderContainer = styled.div`
 
 const ContentContainer = styled.div`
   margin: 5px 0 5px 0 ;
+  font-family: Pretendard;
 `;
 
 const BillTitle = styled.div`
@@ -42,14 +43,14 @@ const BillDetail = () => {
     <div>
       <HeaderContainer>
         <Category category={"카테고리"}/>
-        <Tag hashtag={"태그1"} />
-        <Tag hashtag={"태그1"} />
-        <Tag hashtag={"태그1"} />
+        <Tag hashtag={"자원"} />
+        <Tag hashtag={"절약"} />
+        <Tag hashtag={"재활용"} />
       </HeaderContainer>
       <ContentContainer>
-        <BillTitle>의안 제목</BillTitle>
+        <BillTitle>자원의 절약과 재활용촉진에 관한 법률 일부개정법률안</BillTitle>
         <BillTable>
-            <Row style={{background: '#CCD4E4', display:'flex', justifyContent: 'space-around', alignItems: 'center', fontSize: '13px', color: '#49446B', textAlign: 'center'}}>
+            <Row style={{background: '#CCD4E4', display:'flex', justifyContent: 'space-around', alignItems: 'center', fontSize: '13px', color: '#49446B', textAlign: 'center', padding: '3px 0'}}>
               <Col sm="2" md="2" lg="2">의안 번호</Col>
               <Col sm="2" md="2" lg="2">제안 일자</Col>
               <Col sm="4" md="4" lg="4">발의자</Col>

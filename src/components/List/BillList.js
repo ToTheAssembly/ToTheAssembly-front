@@ -11,6 +11,7 @@ const BillTitle = styled.div`
   margin: 30px 0 10px 0;
   color: #49446B;
   font-size: 15px;
+  font-family: Pretendard;
 `;
 
 const ViewMoreBox = styled.div`
@@ -24,6 +25,7 @@ const ViewMoreBox = styled.div`
 const ViewMoreText = styled.div`
   margin-left: auto;
   font-size: 12px;
+  font-family: Pretendard;
 `;
 
 const BillList = ({billList}) => {
@@ -36,7 +38,7 @@ const BillList = ({billList}) => {
         <BillCard billContent={2} />
         <BillCard billContent={3} />
         <ViewMoreBox>
-            <ViewMoreText>의안 더보기▶</ViewMoreText>
+            <ViewMoreText>의안 더보기 ▶</ViewMoreText>
         </ViewMoreBox>
       </BillContainer>
     </div>

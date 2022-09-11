@@ -16,13 +16,14 @@ const MemberTitle = styled.div`
   margin: 40px 0 10px 0;
   color: #49446B;
   font-size: 15px;
+  font-family: Pretendard;
 `;
 
 const MemberList = ({memberList}) => {
   // 검색어와 관련된 memberList를 가져온다.
   return (
     <div>
-      <MemberTitle>■ 의원(3)</MemberTitle>
+      <MemberTitle>■ 의원(4)</MemberTitle>
       <MemberContainer>
         <MemberCard />
         <MemberCard />
