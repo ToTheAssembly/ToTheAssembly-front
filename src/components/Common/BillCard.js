@@ -32,7 +32,7 @@ const Proposer = styled.div`
 `;
 
 const BillTitle = styled.div`
-  font-size: 18px;
+  font-size: 16px;
 `;
 
 const BillContent = styled.div`
