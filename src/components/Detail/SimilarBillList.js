@@ -3,14 +3,22 @@ import styled from "styled-components";
 import BillCard from '../Common/BillCard';
 
 const BillContainer = styled.div`
-  background: #C4C4D7;
   padding: 5px;
+  background: #C4C4D7;
 `; 
+
+const Title = styled.div`
+  margin: 30px 0 10px 5px;
+  color: #49446B;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: Pretendard;
+`;
 
 const SimilarBillList = () => {
   return (
     <div>
-      <div style={{fontWeight: 700, color: '#49446B', fontSize: '15px', margin: '30px 0 10px 5px', fontFamily: 'Pretendard'}}>유사한 의안</div>
+      <Title>유사한 의안</Title>
       <BillContainer>
         <BillCard />
         <BillCard />

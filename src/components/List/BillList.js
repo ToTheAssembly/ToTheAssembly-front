@@ -3,8 +3,8 @@ import styled from "styled-components";
 import BillCard from '../Common/BillCard';
 
 const BillContainer = styled.div`
-  background: #C4C4D7;
   padding: 5px;
+  background: #C4C4D7;
 `;
 
 const BillTitle = styled.div`
@@ -16,10 +16,10 @@ const BillTitle = styled.div`
 
 const ViewMoreBox = styled.div`
   display: flex;
-  padding: 3px;
   justyfy-content: center;
   align-items: center;
   margin: 0 10px 5px 0;
+  padding: 3px;
 `;
 
 const ViewMoreText = styled.div`

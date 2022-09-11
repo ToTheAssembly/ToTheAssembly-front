@@ -7,18 +7,18 @@ const BillPageContainer = styled.div`
 `;
 
 const CategoryList = styled.div`
-  background: #D9D9D9;
+  height: 100px;
   display: flex;
   padding: 1px;
-  height: 100px;
+  background: #D9D9D9;
 `;
 
 const SelectSortContaier = styled.div`
   display: flex;
-  padding: 3px;
   justyfy-content: center;
   align-items: center;
   margin: 20px 0;
+  padding: 3px;
   font-family: Pretendard;
 `;
 
@@ -31,15 +31,14 @@ const SelectSortBtn = styled.button`
   float: right;
   display: flex;
   padding: 3px 30px;
-  background: #CCD4E4;
   color: #49446B;
+  background: #CCD4E4;
   font-size: 13px;
   border: none;
 `;
 
 const BillCardContainer = styled.div`
   margin: 20px 0;
-
 `;
 
 const BillListPage = () => {

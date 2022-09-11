@@ -9,11 +9,19 @@ const MemberContainer = styled.div`
 
 `; 
 
+const Title = styled.div`
+  margin: 30px 0 10px 5px;
+  color: #49446B;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: Pretendard;
+`;
+
 const SimilarMemberList = () => {
   // member: 국회의원의 정보(json), 숫자는 임시로 넣음
   return (
     <div>
-      <div style={{fontWeight: 700, color: '#49446B', fontSize: '15px', margin: '30px 0 10px 5px', fontFamily:'Pretendard'}}>유사한 의안을 발의한 국회의원</div>
+      <Title>유사한 의안을 발의한 국회의원</Title>
       <MemberContainer>
           <Row>
             <Col>

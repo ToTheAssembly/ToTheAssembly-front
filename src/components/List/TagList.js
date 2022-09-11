@@ -2,13 +2,13 @@ import React from 'react';
 import styled from "styled-components";
 import Tag from '../Common/Tag';
 
-const TagContainer = styled.div`
+const TagBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: #EDF4FA;
-  padding: 20px;
   margin: 0 0 30px 0;
+  padding: 20px;
+  background: #EDF4FA;
 `;
 
 const TagTitle = styled.div`
@@ -23,14 +23,14 @@ const TagList = ({tagList}) => {
   return (
     <div>
       <TagTitle>■ 해시태그(6)</TagTitle>
-      <TagContainer>
+      <TagBox>
         <Tag hashtag={"태그1"} />
         <Tag hashtag={"태그2"} />
         <Tag hashtag={"태그3"} />
         <Tag hashtag={"태그4"} />
         <Tag hashtag={"태그5"} />
         <Tag hashtag={"태그6"} />
-      </TagContainer>
+      </TagBox>
     </div>
   )
 }

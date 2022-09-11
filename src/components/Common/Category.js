@@ -2,12 +2,12 @@ import React from 'react';
 import styled from "styled-components";
 
 const CategoryBox = styled.div`
-  float: left;
   width: auto;
   display: inline-block;
   justify-content: center;
-  background: #CCD4E4;
+  float: left;
   padding: 3px 30px;
+  background: #CCD4E4;
   font-size: 12px;
 `;
 
