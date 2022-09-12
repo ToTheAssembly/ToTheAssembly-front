@@ -4,8 +4,8 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import NavBar from './components/NavBar';
-import FooterBar from './components/Footerbar';
+import NavBar from './components/Common/NavBar';
+import FooterBar from './components/Common/Footerbar';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -5,11 +5,14 @@ import Col from 'react-bootstrap/Col';
 
 const TEXTSTYLE = {
   // background-color, color
-  "국민의힘": ['#F01C2A', 'white'],
+  "국민의힘": ['#D22730', 'white'],
   "더불어민주당": ['#004EA1', 'white'],
   "정의당": ['#FFED00', 'black'],
-  "기본소득당": ['#00D2C3', '#19233C']
+  "기본소득당": ['#00D2C3', '#19233C'],
+  "시대전환당": ['#EDD9EB','#4F2685'],
+  "무소속": ['#505050', '#ffffff']
 }
+
 
 const MemberParty = styled.p`
   position: absolute;
@@ -63,7 +66,7 @@ const MemberCard = () => {
     <Col xs={6} sm={4} md={3} style={{}}>
       <Card style={{width: '170px', padding: '10px', margin: '20px auto'}}>
         <MemberImage src={""}>
-          <MemberParty type={"더불어민주당"}>더불어민주당</MemberParty>
+          <MemberParty type={"시대전환당"}>시대전환당</MemberParty>
         </MemberImage>
         <MemberInfo>
           <MemberOrigin>서울 도봉구</MemberOrigin>

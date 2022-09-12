@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import MemberCard from '../components/MemberCard';
+import MemberCard from '../components/Common/MemberCard';
 import Row from 'react-bootstrap/Row';
 
 const PageContainer = styled.div`

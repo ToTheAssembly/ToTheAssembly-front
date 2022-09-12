@@ -13,7 +13,7 @@ const NavBar = () => {
     <div style={{fontFamily: 'Pretendard', fontSize: '18px'}}>
       <Navbar bg="light" variant="light" >
         <Container style={{maxWidth: '1200px', padding: 'auto'}}>
-          <a href="/"><img src={require("../image/logo_black_500.png")} width='80px' alt="국회로 로고"/></a>
+          <a href="/"><img src={require("../../image/logo_black_500.png")} width='80px' alt="국회로 로고"/></a>
           
           <Nav className="me-auto">&nbsp;&nbsp;&nbsp;
             <Nav.Link href="/bill">의안 조회</Nav.Link>&nbsp;&nbsp;
@@ -22,10 +22,10 @@ const NavBar = () => {
             <Nav.Link href="/voca">용어 해설</Nav.Link>
           </Nav>
 
-          <div class="input-group" style={{maxWidth: '300px'}}>
-			      <input type="text" class="form-control" />
-			      <div class="input-group-append">
-              <button class="btn btn-primary" style={{backgroundColor: '#779BE0', borderColor: '#779BE0'}}><FontAwesomeIcon icon={faSearch} /></button>
+          <div className="input-group" style={{maxWidth: '300px'}}>
+			      <input type="text" className="form-control" />
+			      <div className="input-group-append">
+              <button className="btn btn-primary" style={{backgroundColor: '#779BE0', borderColor: '#779BE0'}}><FontAwesomeIcon icon={faSearch} /></button>
             </div>
 		      </div>
         </Container>
