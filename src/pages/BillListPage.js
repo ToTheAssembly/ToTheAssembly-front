@@ -1,13 +1,17 @@
 import React from 'react';
 import styled from "styled-components";
 import BillCard from '../components/Common/BillCard.js';
+import Row from 'react-bootstrap/Row';
 
 const BillPageContainer = styled.div`
-  margin: 0 30px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 1000px;
 `;
 
 const CategoryList = styled.div`
-  height: 100px;
+  height: 160px;
   display: flex;
   padding: 1px;
   background: #D9D9D9;
@@ -23,7 +27,9 @@ const SelectSortContaier = styled.div`
 `;
 
 const SelectSortBox = styled.div`
+  display: flex;
   margin-left: auto;
+  margin-right: 5px;
 `;
 
 
@@ -33,12 +39,13 @@ const SelectSortBtn = styled.button`
   padding: 3px 30px;
   color: #49446B;
   background: #CCD4E4;
-  font-size: 13px;
+  font-size: 18px;
   border: none;
 `;
 
 const BillCardContainer = styled.div`
-  margin: 20px 0;
+  display: flex;
+  margin: 0 auto;
 `;
 
 const BillListPage = () => {
@@ -47,7 +54,8 @@ const BillListPage = () => {
   return (
     <div>
     <CategoryList>카테고리 목록이 들어갑니다.</CategoryList>
-    <BillPageContainer>
+    <div style={{height: '20px'}} />
+    <BillPageContainer >
       <SelectSortContaier>
         <SelectSortBox>
           <SelectSortBtn>조회순</SelectSortBtn>
@@ -55,11 +63,14 @@ const BillListPage = () => {
         </SelectSortBox>
       </SelectSortContaier>
       <BillCardContainer>
-        <BillCard billContent={1} /> 
-        <BillCard billContent={2} />
-        <BillCard billContent={3} />
+        <Row>
+          <BillCard billContent={1} /> 
+          <BillCard billContent={2} />
+          <BillCard billContent={3} />
+        </Row>
       </BillCardContainer>
     </BillPageContainer>
+    <div style={{height: '100px'}} />
     </div>
 
   )
