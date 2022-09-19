@@ -8,6 +8,7 @@ const HeaderContainer = styled.div`
   display: flex;
   justyfy-content: center;
   align-items: center;
+  padding: 5px;
 `;
 
 const TagBox = styled.div`
@@ -28,17 +29,17 @@ const Proposer = styled.div`
   padding: 3px 30px;
   color: white;
   background: #49446B;
-  font-size: 12px;
+  font-size: 18px;
   font-family: Pretendard;
 `;
 
 const BillTitle = styled.div`
-  font-size: 16px;
+  font-size: 28px;
   font-family: Pretendard
 `;
 
 const BillContent = styled.div`
-  font-size: 12px;
+  font-size: 18px;
   font-family: Pretendard
 `;
 

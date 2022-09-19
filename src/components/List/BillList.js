@@ -8,9 +8,9 @@ const BillContainer = styled.div`
 `;
 
 const BillTitle = styled.div`
-  margin: 30px 0 10px 0;
+  margin: 0 0 10px 0;
   color: #49446B;
-  font-size: 15px;
+  font-size: 25px;
   font-family: Pretendard;
 `;
 
@@ -24,7 +24,8 @@ const ViewMoreBox = styled.div`
 
 const ViewMoreText = styled.div`
   margin-left: auto;
-  font-size: 12px;
+  color: #49446B;
+  font-size: 20px;
   font-family: Pretendard;
 `;
 

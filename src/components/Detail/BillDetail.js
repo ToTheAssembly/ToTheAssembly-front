@@ -9,17 +9,15 @@ const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 20px 0 10px 0;
 `;
 
 const ContentContainer = styled.div`
-  margin: 5px 0 5px 0 ;
   font-family: Pretendard;
 `;
 
 const BillTitle = styled.div`
   margin: 10px 0 10px 5px;
-  font-size: 15px;
+  font-size: 28px;
   font-weight: 700;
 `;
 
@@ -29,12 +27,12 @@ const BillContentBox = styled.div`
   justify-content: center;
   padding: 20px;
   border: solid 1px #C4C4D7;
-  font-size: 12px;
+  font-size: 18px;
 `;
 
 const ContentTitle = styled.div`
   margin-bottom: 15px;
-  font-size: 15px;
+  font-size: 28px;
   font-weight: 700;
 `;
 
@@ -46,6 +44,7 @@ const Content = styled.div`
 const BillDetail = () => {
   return (
     <div>
+      <div style={{height: '70px'}} />
       <HeaderContainer>
         <Category category={"카테고리"}/>
         <Tag hashtag={"자원"} />

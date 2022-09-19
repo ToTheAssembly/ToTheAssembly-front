@@ -12,9 +12,9 @@ const TagBox = styled.div`
 `;
 
 const TagTitle = styled.div`
-  margin: 40px 0 10px 0;
+  margin: 0 0 10px 0;
   color: #49446B;
-  font-size: 15px;
+  font-size: 25px;
   font-family: Pretendard;
 `;
 

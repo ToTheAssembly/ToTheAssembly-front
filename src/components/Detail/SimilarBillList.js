@@ -8,9 +8,9 @@ const BillContainer = styled.div`
 `; 
 
 const Title = styled.div`
-  margin: 30px 0 10px 5px;
+  margin-left: 5px;
   color: #49446B;
-  font-size: 15px;
+  font-size: 24px;
   font-weight: 700;
   font-family: Pretendard;
 `;

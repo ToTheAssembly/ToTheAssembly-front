@@ -4,15 +4,16 @@ import { Row, Col  } from 'react-bootstrap';
 import SimilarMemberCard from './SimilarMemberCard';
 
 const MemberContainer = styled.div`
+  display: flex;
   background: #7A7398;
   padding: 20px;
 
 `; 
 
 const Title = styled.div`
-  margin: 30px 0 10px 5px;
+  margin-left: 5px;
   color: #49446B;
-  font-size: 15px;
+  font-size: 24px;
   font-weight: 700;
   font-family: Pretendard;
 `;
@@ -24,19 +25,12 @@ const SimilarMemberList = () => {
       <Title>유사한 의안을 발의한 국회의원</Title>
       <MemberContainer>
           <Row>
-            <Col>
               <SimilarMemberCard member={1} />
-            </Col>
-            <Col>
-              <SimilarMemberCard member={2} />
-            </Col>
-          </Row>
-          <Row style={{marginTop: '20px'}}>
-            <Col>
-              <SimilarMemberCard member={3} />
-            </Col>
-            <Col />
-          </Row>        
+              <SimilarMemberCard member={1} />
+          </Row>  
+          <Row>
+              <SimilarMemberCard member={1} />
+          </Row>   
       </MemberContainer>
     </div>
   )
