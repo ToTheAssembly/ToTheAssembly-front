@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Tag from '../components/Common/Tag';
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
 
 const SearchBackground = styled.div`
     height: 300px;
@@ -36,9 +37,9 @@ const BillCountContainer = styled.div`
 
 const CIRCLESTYLE = {
     // background-color, font-size
-    "month": ['#CCD4E4', ''],
-    "week": ['#CCD4E4', ''],
-    "term": ['#A39DBC', ''],
+    "thisMonth": ['#CCD4E4', ''],
+    "thisWeek": ['#CCD4E4', ''],
+    "totalCount": ['#A39DBC', ''],
     "title": ['', '24px'],
     "count": ['', '48px']
 }
@@ -132,6 +133,22 @@ const Input = styled.input`
 `
 
 const MainPage = ({ history }) => {
+
+    const [thisWeek, setThisWeek] = useState(0);
+    const [thisMonth, setThisMonth] = useState(0);
+    const [totalCount, setTotalCount] = useState(0);
+
+    useEffect(() => {
+        axios.get("/api/bill/count").then((response) => {
+            if(response.data.success) {
+                setThisWeek(response.data.thisWeek);
+                setThisMonth(response.data.thisMonth);
+                setTotalCount(response.data.totalCount);
+            }
+        })
+    })
+
+
     return (
         <>
         
@@ -153,17 +170,17 @@ const MainPage = ({ history }) => {
         
         <BillCountContainer>
             
-            <BillCountCircle type={"month"}>
+            <BillCountCircle type={"thisMonth"}>
                 <BillCount type={"title"}>이번 달 의안</BillCount>
-                <BillCount type={"count"}>31</BillCount>
+                <BillCount type={"count"}>{thisMonth}</BillCount>
             </BillCountCircle>
-            <BillCountCircle type={"week"}>
+            <BillCountCircle type={"thisWeek"}>
                 <BillCount type={"title"}>이번 주 의안</BillCount>
-                <BillCount type={"count"}>5</BillCount>
+                <BillCount type={"count"}>{thisWeek}</BillCount>
             </BillCountCircle>
-            <BillCountCircle type={"term"}>
+            <BillCountCircle type={"totalCount"}>
                 <BillCount type={"title"}>제21대 국회</BillCount>
-                <BillCount type={"count"}>20012</BillCount>
+                <BillCount type={"count"}>{totalCount}</BillCount>
             </BillCountCircle>
         </BillCountContainer>
 
