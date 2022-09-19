@@ -1,5 +1,5 @@
 import React from 'react';
-import MemberCard from '../MemberCard'
+import MemberCard from '../Common/MemberCard'
 import styled from "styled-components";
 
 

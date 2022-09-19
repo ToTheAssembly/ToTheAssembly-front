@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import styled from "styled-components";
-import MemberCard from '../MemberCard';
+import MemberCard from '../Common/MemberCard';
 import Tag from '../Common/Tag'
 
 
