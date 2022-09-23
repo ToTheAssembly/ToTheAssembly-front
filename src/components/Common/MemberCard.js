@@ -27,11 +27,16 @@ const MemberParty = styled.p`
   margin: 0px;
 `
 
-const MemberImage = styled.div`
+const MemberImageContainer = styled.div`
   width: 150px;
   height: 200px;
   background: #D9D9D9;
   position: relative;
+`
+
+const MemberImage = styled.img`
+  width: 150px;
+  height: 200px;
 `
 
 const MemberInfo = styled.div`
@@ -42,7 +47,6 @@ const MemberInfo = styled.div`
   height: 60px;
   background: #ffffff;
   margin: 0px;
-  flex: 
 `
 
 const MemberOrigin = styled.div`
@@ -65,9 +69,10 @@ const MemberCard = () => {
   return (
     <Col xs={6} sm={4} md={3} style={{}}>
       <Card style={{width: '170px', padding: '10px', margin: '20px auto'}}>
-        <MemberImage src={""}>
+        <MemberImageContainer>
           <MemberParty type={"시대전환당"}>시대전환당</MemberParty>
-        </MemberImage>
+          <MemberImage src={""} alt={"의원 사진"} />
+        </MemberImageContainer>
         <MemberInfo>
           <MemberOrigin>서울 도봉구</MemberOrigin>
           <MemberName>
