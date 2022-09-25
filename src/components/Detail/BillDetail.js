@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Category from '../Common/Category';
-import Tag from '../Common/Tag';
-import BillTable from './BillTable';
-
+import Category from "../Common/Category";
+import Tag from "../Common/Tag";
+import BillTable from "./BillTable";
+import axios from "axios";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ const BillContentBox = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: 20px;
-  border: solid 1px #C4C4D7;
+  border: solid 1px #c4c4d7;
   font-size: 18px;
 `;
 
@@ -40,27 +40,68 @@ const Content = styled.div`
   padding: 5px;
 `;
 
+const BillDetail = (billId) => {
+  const [bill, setBill] = useState([]);
+  const [tags, setTags] = useState([]);
 
-const BillDetail = () => {
+  const id = billId.billId;
+
+  useEffect(() => {
+    console.log("BillDetailPage");
+    const fetchData = async () => {
+      try {
+        //console.log(billId.billId);
+        const response = await axios.get(`/api/bill/${id}`);
+        setBill(response.data.bill);
+        console.log(response.data.bill);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (bill.length != 0) {
+      console.log("bill useEffect 실행!");
+      console.log(bill);
+      const tagArray = bill.hashtag.split("#");
+      tagArray.shift();
+      setTags(tagArray);
+    }
+  }, [bill]);
+
+  useEffect(() => {
+    if (tags.length != 0) {
+      console.log("tags useEffect 실행!");
+      console.log(tags);
+      // 스피너
+    }
+  }, [tags]);
+
   return (
     <div>
-      <div style={{height: '70px'}} />
+      <div style={{ height: "70px" }} />
       <HeaderContainer>
-        <Category category={"카테고리"}/>
-        <Tag hashtag={"자원"} />
-        <Tag hashtag={"절약"} />
-        <Tag hashtag={"재활용"} />
+        <Category category={"카테고리"} />
+        {tags.length != 0 ? (
+          tags.map((tag) => {
+            return <Tag key={tag} hashtag={tag} />;
+          })
+        ) : (
+          <></>
+        )}
       </HeaderContainer>
       <ContentContainer>
-        <BillTitle>자원의 절약과 재활용촉진에 관한 법률 일부개정법률안</BillTitle>
-        <BillTable />
+        <BillTitle>{bill.title}</BillTitle>
+        <BillTable bill={bill} />
         <BillContentBox>
           <ContentTitle>내용</ContentTitle>
-          <Content>의안 내용 미리보기... 최근 백두대간 및 비무장지대 등에 대한 개발의 목소리가 높아지고 있는 가운데, ...(중략)... 하지만 현행 「자연환경보전법」에 따른 자연환경보전기본방침 수립 시 고려대상에 생태축 보전·복원 내용이 포함되어 있지 않아 ...(중략)... 이에 자연환경보전기본방침 수립 시 고려대상에 생태축 보전복원 내용을 포함하고, 생태축 보전복원이 국가 또는 지방자치단체의 책무로 이어질 수 있도록 생태축 정의를...  의안 내용 미리보기... 최근 백두대간 및 비무장지대 등에 대한 개발의 목소리가 높아지고 있는 가운데, ...(중략)... 하지만 현행 「자연환경보전법」에 따른 자연환경보전기본방침 수립 시 고려대상에 생태축 보전·복원 내용이 포함되어 있지 않아 ...(중략)... 이에 자연환경보전기본방침 수립 시 고려대상에 생태축 보전복원 내용을 포함하고, 생태축 보전복원이 국가 또는 지방자치단체의 책무로 이어질 수 있도록 생태축 정의를 보다 구체화하여 그 실효성을 제고하고자 함(안 제2조제8호 및 제6조제2항제8호).</Content>
+          <Content>{bill.content}</Content>
         </BillContentBox>
       </ContentContainer>
     </div>
-  )
-}
+  );
+};
 
 export default BillDetail;
