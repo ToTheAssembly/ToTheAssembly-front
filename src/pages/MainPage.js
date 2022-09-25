@@ -139,7 +139,7 @@ const MainPage = ({ history }) => {
     const [totalCount, setTotalCount] = useState(0);
 
     useEffect(() => {
-        axios.get("/api/bill/count").then((response) => {
+        axios.get(`/api/bill/count`).then((response) => {
             if(response.data.success) {
                 setThisWeek(response.data.thisWeek);
                 setThisMonth(response.data.thisMonth);
@@ -149,7 +149,7 @@ const MainPage = ({ history }) => {
     })
 
 
-    return (
+    return ( true &&
         <>
         
         <SearchBackground>

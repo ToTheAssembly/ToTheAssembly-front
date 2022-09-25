@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Card } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
+import { Link } from "react-router-dom";
 
 const TEXTSTYLE = {
   // background-color, color
@@ -13,6 +14,10 @@ const TEXTSTYLE = {
   "무소속": ['#505050', '#ffffff']
 }
 
+const CardContainer = styled(Link)`
+  text-decoration: none;
+  color: black;
+`;
 
 const MemberParty = styled.p`
   position: absolute;
@@ -65,23 +70,27 @@ const MemberName = styled.div`
   font-family: Pretendard;
 `;
 
-const MemberCard = () => {
+const MemberCard = ( props ) => {
+  const data = props.data; 
+
   return (
-    <Col xs={6} sm={4} md={3} style={{}}>
-      <Card style={{width: '170px', padding: '10px', margin: '20px auto'}}>
-        <MemberImageContainer>
-          <MemberParty type={"시대전환당"}>시대전환당</MemberParty>
-          <MemberImage src={""} alt={"의원 사진"} />
-        </MemberImageContainer>
-        <MemberInfo>
-          <MemberOrigin>서울 도봉구</MemberOrigin>
-          <MemberName>
-            <p>대한민국</p>&nbsp;
-            <p style={{fontSize: '14px', paddingBottom: '0px'}}>의원</p>
-          </MemberName>
-        </MemberInfo>
-      </Card>
-    </Col>
+      <Col xs={6} sm={4} md={3} style={{}}>
+        <CardContainer to={`/member/detail`} state={{data: data && data.id}}>
+        <Card style={{width: '170px', padding: '10px', margin: '20px auto'}}>
+          <MemberImageContainer>
+            <MemberParty type={data.party}>{data.party}</MemberParty>
+            <MemberImage src={data.image} alt={`${data.name} 의원 사진`} />
+          </MemberImageContainer>
+          <MemberInfo>
+            <MemberOrigin>{data.origin}</MemberOrigin>
+            <MemberName>
+              <p>{data.name}</p>&nbsp;
+              <p style={{fontSize: '14px', paddingBottom: '0px'}}>의원</p>
+            </MemberName>
+          </MemberInfo>
+        </Card>
+        </CardContainer>
+      </Col>
   )
 }
 

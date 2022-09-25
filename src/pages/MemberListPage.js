@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
-import MemberCard from '../components/Common/MemberCard';
 import Row from 'react-bootstrap/Row';
+import axios from 'axios';
+import MemberCard from '../components/Common/MemberCard';
 
 const PageContainer = styled.div`
   margin: 0 auto;
@@ -20,20 +21,31 @@ const MemberCardContainer = styled.div`
 `;
 
 const MemberListPage = () => {
-  return (
+  const [members, setMembers] = useState([]);  // 의원 목록
+  const [filter, setFilter] = useState(1);  // 정당 필터링 1 to 6
+  const [currentPage, setCurrentPage] = useState(1);  // 페이지네이션
+
+  
+  useEffect(() => {
+    axios.get(`/api/member/list?page=${currentPage}`).then((response) => {
+      if (response.data.success) {
+        setMembers(response.data.members);
+      }
+    });
+  }, [currentPage, filter]);
+
+  const CardList = members?.map((data, index) => {
+    return <MemberCard data={data} key={index} />;
+  });
+  
+  return ( members &&
     <div>
-      <PageContainer class="container">
+      <PageContainer className="container">
       <MemberFilter />
       <div style={{height: '60px'}} />
         <MemberCardContainer>
-          <Row>
-            <MemberCard memberContent={1} />
-            <MemberCard memberContent={2} />
-            <MemberCard memberContent={3} />
-            <MemberCard memberContent={4} />
-            <MemberCard memberContent={5} />
-            <MemberCard memberContent={6} />
-            <MemberCard memberContent={7} />
+          <Row style={{width: '100%'}}>
+            {CardList}
           </Row>
         </MemberCardContainer>
         <div style={{height: '100px'}} />
