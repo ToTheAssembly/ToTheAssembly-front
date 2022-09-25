@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BillCard from "../components/Common/BillCard.js";
+import { useNavigate } from "react-router-dom";
 import Row from "react-bootstrap/Row";
-import CPagination from "../components/Common/CPagination.js";
+import Paginate from "../components/Common/Paginate.js";
 import axios from "axios";
 
 const BillPageContainer = styled.div`
@@ -31,7 +32,6 @@ const SelectSortContaier = styled.div`
 const SelectSortBox = styled.div`
   display: flex;
   margin-left: auto;
-  margin-right: 5px;
 `;
 
 const SelectSortBtn = styled.button`
@@ -40,7 +40,7 @@ const SelectSortBtn = styled.button`
   padding: 3px 30px;
   color: #49446b;
   background: #ccd4e4;
-  font-size: 18px;
+  font-size: 20px;
   border: none;
 `;
 
@@ -55,34 +55,47 @@ const PagenationContainer = styled.div`
 `;
 
 const BillListPage = () => {
-  // billContent에는 bill의 data(json)이 들어감, 숫자는 임시로 넣음
-  // 조회순, 최신순 클릭 이벤트 주기
-
+  // pagination
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
 
+  // bills
   const [bills, setBills] = useState([]);
-  const [totalPage, setTotalPage] = useState(0);
 
+  // sort, page, state가 변할 때 렌더링
   useEffect(() => {
+    console.log("useEffect BillListPage!");
     const fetchData = async () => {
       try {
         const response = await axios.get(
           `/api/bill/list?sort=${sort}&page=${page}`
         );
         setBills(response.data.bills);
+        console.log(response.data.bills);
+        console.log(response.data.bills.length);
         setTotalPage(response.data.bills.length);
-        //console.log(response.data.bills);
       } catch (e) {
-        console.log(e.response);
+        console.log(e);
       }
     };
     fetchData();
-  }, [sort]);
+  }, [sort, page]);
 
+  // sort Event 1: 최신순, 2: 인기순
   const sortEvent = (e) => {
     //console.log(e.target.name);
     e.target.name === "최신순" ? setSort(1) : setSort(2);
+  };
+
+  // 의안 목록 생성
+  const listItem = () => {
+    const billList = bills.map((bill) => {
+      return <BillCard key={bill.id} content={bill} />;
+    });
+    //console.log(billList.length);
+
+    return billList;
   };
 
   return (
@@ -101,13 +114,13 @@ const BillListPage = () => {
           </SelectSortBox>
         </SelectSortContaier>
         <BillCardContainer>
-          <Row>
-            {bills.map((bill) => {
-              return <BillCard key={bill.bill_num} content={bill} />;
-            })}
-          </Row>
+          {/*의안 목록*/}
+          <Row>{listItem()}</Row>
         </BillCardContainer>
-        <PagenationContainer>{/* <CPagination /> */}</PagenationContainer>
+        <PagenationContainer>
+          {/*페이지네이션*/}
+          <Paginate page={page} setPage={setPage} totalPage={totalPage} />
+        </PagenationContainer>
       </BillPageContainer>
       <div style={{ height: "100px" }} />
     </div>
