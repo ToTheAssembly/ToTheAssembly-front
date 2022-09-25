@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import BillCard from '../components/Common/BillCard';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const PageContainer = styled.div`
   margin: 0 auto;
 `;
 
-const MemberImage = styled.div`
+const MemberImage = styled.img`
+  display: block;
   width: 270px;
   height: 360px;
   background: #D9D9D9;
@@ -21,7 +24,9 @@ const TEXTSTYLE = {
   "국민의힘": ['#F01C2A', 'white'],
   "더불어민주당": ['#004EA1', 'white'],
   "정의당": ['#FFED00', 'black'],
-  "기본소득당": ['#00D2C3', '#19233C']
+  "기본소득당": ['#00D2C3', '#19233C'],
+  "시대전환당": ['#EDD9EB','#4F2685'],
+  "무소속": ['#505050', '#ffffff']
 }
 
 const MemberParty = styled.p`
@@ -68,61 +73,75 @@ const Title = styled.div`
   max-width: 900px
 `
 
-const MemberDetailPage = () => {
-  return (
-    <PageContainer class="container">
+const MemberDetailPage = (props) => {
+  const location = useLocation();
+  const memberId = location.state.data;
+  const [member, setMember] = useState([]);
+  
+  useEffect(() => {
+    console.log("요청");
+    console.log(memberId);
+
+    axios.get(`/api/member/${memberId}`).then((response) => {
+      console.log(response);
+      if (response.data.success) {
+        setMember(response.data.member);
+      }
+    });
+  }, [memberId]);
+
+  return ( member &&
+    <PageContainer className="container">
       {/* 의원 정보 */}
       <Title>■ 의원 정보</Title>
       <Row style={{margin: '20px auto', padding: '50px 0', maxWidth: '900px', border: '1px solid #A7A7A7'}}>
         <Col xs={12} sm={6} style={{margin: 'auto'}}>
-          <MemberImage />
+          <MemberImage src={member.image || null} alt={`${member.name} 의원 사진`} />
           <div style={{color: '#49446B', textAlign: 'center', padding: '10px 0 6px 0'}}>정당</div>
-          <MemberParty type={"더불어민주당"}>더불어민주당</MemberParty>
+          {member.party && <MemberParty type={member.party}>{member.party}</MemberParty>}
         </Col>
         <Col xs={12} sm={6} style={{}}>
           <MemberInfoRow>
             <MemberInfoAttr>이름</MemberInfoAttr>
-            <MemberInfoContent>송옥주</MemberInfoContent>
+            <MemberInfoContent>{member.name}</MemberInfoContent>
           </MemberInfoRow>
           <MemberInfoRow>
             <MemberInfoAttr>성별</MemberInfoAttr>
-            <MemberInfoContent>여</MemberInfoContent>
+            <MemberInfoContent>{member.gender}</MemberInfoContent>
           </MemberInfoRow>
           <MemberInfoRow>
             <MemberInfoAttr>생년월일</MemberInfoAttr>
-            <MemberInfoContent>(양) 1965-12-20</MemberInfoContent>
+            <MemberInfoContent>({member.btn_sl}) {member.bth_date}</MemberInfoContent>
           </MemberInfoRow>
           <MemberInfoRow>
             <MemberInfoAttr>직책명</MemberInfoAttr>
-            <MemberInfoContent>정보</MemberInfoContent>
+            <MemberInfoContent>{member.position}</MemberInfoContent>
           </MemberInfoRow>
           <MemberInfoRow>
             <MemberInfoAttr>선거구</MemberInfoAttr>
-            <MemberInfoContent>정보</MemberInfoContent>
+            <MemberInfoContent>{member.origin}</MemberInfoContent>
           </MemberInfoRow>
           <MemberInfoRow>
             <MemberInfoAttr>전화번호</MemberInfoAttr>
-            <MemberInfoContent>정보</MemberInfoContent>
+            <MemberInfoContent>{member.phone}</MemberInfoContent>
           </MemberInfoRow>
           <MemberInfoRow>
             <MemberInfoAttr>이메일</MemberInfoAttr>
-            <MemberInfoContent>정보</MemberInfoContent>
+            <MemberInfoContent>{member.email}</MemberInfoContent>
           </MemberInfoRow>
           <MemberInfoRow>
             <MemberInfoAttr>홈페이지</MemberInfoAttr>
-            <MemberInfoContent>정보</MemberInfoContent>
+            <MemberInfoContent>{member.homepage}</MemberInfoContent>
           </MemberInfoRow>
           <MemberInfoRow>
             <MemberInfoAttr>대표 위원회</MemberInfoAttr>
-            <MemberInfoContent>정보</MemberInfoContent>
+            <MemberInfoContent>{member.main_committee}</MemberInfoContent>
           </MemberInfoRow>
           <MemberInfoRow>
             <MemberInfoAttr>소속 위원회</MemberInfoAttr>
-            <MemberInfoContent>정보</MemberInfoContent>
+            <MemberInfoContent>{member.committees_array}</MemberInfoContent>
           </MemberInfoRow>
-        </Col>
-      
-        
+        </Col>    
       </Row>
       
       <div style={{height: '20px'}} />

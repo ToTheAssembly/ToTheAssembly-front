@@ -19,16 +19,18 @@ const MemberTitle = styled.div`
   font-family: Pretendard;
 `;
 
-const MemberList = ({memberList}) => {
-  // 검색어와 관련된 memberList를 가져온다.
+const MemberList = (props) => {
+  const data = props.data || null;
+  
+  const CardList = data?.map((data, index) => {
+    return <MemberCard data={data} key={index} />;
+  });
+
   return (
     <div>
       <MemberTitle>■ 의원(4)</MemberTitle>
       <MemberContainer>
-        <MemberCard />
-        <MemberCard />
-        <MemberCard />
-        <MemberCard />
+        {CardList}
       </MemberContainer>
     </div>
   )
