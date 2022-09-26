@@ -19,7 +19,7 @@ const BillDetailPage = () => {
       <div style={{ height: "70px" }} />
       {/* <SimilarBillList billId={billId} /> */}
       <div style={{ height: "70px" }} />
-      <SimilarMemberList />
+      {/* <SimilarMemberList /> */}
       <div style={{ height: "100px" }} />
     </PageContainer>
   );
