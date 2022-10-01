@@ -17,19 +17,17 @@ import TrendPage from "./pages/TrendPage";
 function App() {
   return (
     <>
-      <Router>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/bill" element={<BillListPage />} />
-          <Route path="/bill/detail/:billId" element={<BillDetailPage />} />
-          <Route path="/member" element={<MemberListPage />} />
-          <Route path="/member/detail" element={<MemberDetailPage />} />
-          <Route path="/search" element={<SearchResultPage />} />
-          <Route path="/voca" element={<VocaPage />} />
-          <Route path="/trend" element={<TrendPage />} />
-        </Routes>
-      </Router>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/bill" element={<BillListPage />} />
+        <Route path="/bill/detail/:billId" element={<BillDetailPage />} />
+        <Route path="/member" element={<MemberListPage />} />
+        <Route path="/member/detail" element={<MemberDetailPage />} />
+        <Route path="/search/:keyword" element={<SearchResultPage />} />
+        <Route path="/voca" element={<VocaPage />} />
+        <Route path="/trend" element={<TrendPage />} />
+      </Routes>
     </>
   );
 }

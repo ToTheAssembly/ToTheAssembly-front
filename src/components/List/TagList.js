@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import styled from "styled-components";
-import Tag from '../Common/Tag';
+import Tag from "../Common/Tag";
 
 const TagBox = styled.div`
   display: flex;
@@ -8,31 +8,30 @@ const TagBox = styled.div`
   align-items: center;
   margin: 0 0 30px 0;
   padding: 20px;
-  background: #EDF4FA;
+  background: #edf4fa;
 `;
 
 const TagTitle = styled.div`
   margin: 0 0 10px 0;
-  color: #49446B;
+  color: #49446b;
   font-size: 25px;
   font-family: Pretendard;
 `;
 
-const TagList = ({tagList}) => {
-  // 검색어와 관련된 tagList를 가져온다.
+const TagList = ({ content }) => {
+  const count = content.length;
+  //console.log(content);
+
   return (
     <div>
-      <TagTitle>■ 해시태그(6)</TagTitle>
+      <TagTitle>■ 해시태그({count})</TagTitle>
       <TagBox>
-        <Tag hashtag={"태그1"} />
-        <Tag hashtag={"태그2"} />
-        <Tag hashtag={"태그3"} />
-        <Tag hashtag={"태그4"} />
-        <Tag hashtag={"태그5"} />
-        <Tag hashtag={"태그6"} />
+        {content.map((tag) => {
+          return <Tag key={tag} hashtag={tag} />;
+        })}
       </TagBox>
     </div>
-  )
-}
+  );
+};
 
 export default TagList;
