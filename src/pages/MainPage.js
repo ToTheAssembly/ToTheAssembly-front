@@ -165,7 +165,6 @@ const MainPage = ({ history }) => {
     const [totalCount, setTotalCount] = useState(0);
 
     useEffect(() => {
-        console.log("뭐임");
         axios.get(`/api/hashtag/random`).then((response) => {
             if(response.data.success) {
                 setHashtag(response.data.randomhash);
