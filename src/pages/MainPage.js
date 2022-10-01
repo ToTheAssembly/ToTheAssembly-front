@@ -158,9 +158,25 @@ const TrendContainer = styled.div`
 
 const MainPage = ({ history }) => {
 
+    const [hashtag, setHashtag] = useState([]);
+
     const [thisWeek, setThisWeek] = useState(0);
     const [thisMonth, setThisMonth] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
+
+    useEffect(() => {
+        console.log("뭐임");
+        axios.get(`/api/hashtag/random`).then((response) => {
+            if(response.data.success) {
+                setHashtag(response.data.randomhash);
+            }
+        })
+    }, []);
+
+    const TagList = hashtag?.map((data, index) => {
+        console.log(data);
+        return <Tag hashtag={data} key={index} />;
+    });
 
     useEffect(() => {
         axios.get(`/api/bill/count`).then((response) => {
@@ -170,7 +186,7 @@ const MainPage = ({ history }) => {
                 setTotalCount(response.data.totalCount);
             }
         })
-    })
+    }, []);
 
 
     return ( true &&
@@ -185,6 +201,7 @@ const MainPage = ({ history }) => {
               <InputUnderLine />
     
                 <TagBox>
+                    {hashtag && TagList}
                     <Tag hashtag={"태그1"}/>
                     <Tag hashtag={"태그2"}/>
                     <Tag hashtag={"태그333"}/>
