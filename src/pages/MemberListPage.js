@@ -19,7 +19,7 @@ const MemberCardContainer = styled.div`
   margin: 0 auto;
   padding: 0 5%;
   max-width: 1000px;
-  height: 1000px;
+  max-height: 1000px;
 `;
 
 const PagenationContainer = styled.div`
