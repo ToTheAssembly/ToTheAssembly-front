@@ -146,12 +146,12 @@ const MemberDetailPage = (props) => {
       
       <div style={{height: '20px'}} />
 
-      {/* 발의한 법안 목록 */}
+    
       <Title>■ 발의한 법안 목록</Title>
       <Row style={{margin: 'auto',  maxWidth: '900px'}}>
-        <BillCard billContent={1} />
+        {/* <BillCard billContent={1} />
         <BillCard billContent={2} />
-        <BillCard billContent={3} />
+        <BillCard billContent={3} /> */}
       </Row>
 
       <div style={{height: '100px'}} />

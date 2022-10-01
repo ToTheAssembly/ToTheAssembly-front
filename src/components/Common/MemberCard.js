@@ -78,7 +78,7 @@ const MemberCard = ( props ) => {
         <CardContainer to={`/member/detail`} state={{data: data && data.id}}>
         <Card style={{width: '170px', padding: '10px', margin: '20px auto'}}>
           <MemberImageContainer>
-            <MemberParty type={data.party}>{data.party}</MemberParty>
+            {data.party && <MemberParty type={data.party}>{data.party}</MemberParty>}
             <MemberImage src={data.image} alt={`${data.name} 의원 사진`} />
           </MemberImageContainer>
           <MemberInfo>
