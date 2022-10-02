@@ -3,6 +3,8 @@ import Category from "./Category.js";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Tag from "./Tag.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -26,12 +28,14 @@ const ContentContainer = styled.div`
 `;
 
 const Proposer = styled.div`
-  margin-left: auto;
-  padding: 3px 30px;
+  width: 200px;
+  margin-left: 20px;
+  padding: 6px 30px;
   color: white;
   background: #49446b;
   font-size: 18px;
   font-family: Pretendard;
+  text-align: center;
 `;
 
 const BillTitle = styled.div`
@@ -52,6 +56,25 @@ const Button = styled.button`
   border: solid 1px gray;
   background: none;
   text-align: left;
+`;
+
+const Likes = styled.div`
+  padding: 3px 10px;
+  color: black;
+  font-size: 20px;
+  font-family: Pretendard;
+  text-align: center;
+`;
+
+const LikesBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  padding: 6px 10px;
+  color: black;
+  font-size: 20px;
 `;
 
 // content: bill(json)
@@ -76,12 +99,16 @@ const BillCard = ({ content }) => {
     <Button style={{ padding: "10px", margin: "10px" }} onClick={movePage}>
       <HeaderContainer>
         <Category category={"카테고리1"} />
+        <Proposer>{content.proposer}</Proposer>
         <TagBox>
           {tagArray.map((tag) => {
             return <Tag key={tag} hashtag={tag} />;
           })}
         </TagBox>
-        <Proposer>{content.proposer}</Proposer>
+        <LikesBox>
+          <FontAwesomeIcon icon={faHeart} />
+          <Likes>1111</Likes>
+        </LikesBox>
       </HeaderContainer>
       <ContentContainer>
         <BillTitle>{content.title}</BillTitle>

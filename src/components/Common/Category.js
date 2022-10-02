@@ -1,30 +1,29 @@
-import React from 'react';
+import React from "react";
 import styled from "styled-components";
 
 const CategoryBox = styled.div`
-  width: auto;
+  width: 200px;
   display: inline-block;
   justify-content: center;
   float: left;
-  padding: 3px 30px;
-  background: #CCD4E4;
+  padding: 6px 30px;
+  background: #ccd4e4;
   font-size: 12px;
+  text-align: center;
 `;
 
 const CategoryText = styled.div`
   display: inline-block;
   font-size: 18px;
-  font-family: Pretendard
+  font-family: Pretendard;
 `;
 
-const Category = ({category}) => {
+const Category = ({ category }) => {
   return (
     <CategoryBox>
-      <CategoryText>
-        {category}
-      </CategoryText>
+      <CategoryText>{category}</CategoryText>
     </CategoryBox>
-  )
-}
+  );
+};
 
 export default Category;
