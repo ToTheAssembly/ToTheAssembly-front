@@ -83,7 +83,8 @@ const BillDetail = (billId) => {
     <div>
       <div style={{ height: "70px" }} />
       <HeaderContainer>
-        <Category category={"카테고리"} />
+        <Category category={bill.category} />
+        <div style={{ marginRight: "10px" }} />
         {tags.length != 0 ? (
           tags.map((tag) => {
             return <Tag key={tag} hashtag={tag} />;
@@ -92,6 +93,7 @@ const BillDetail = (billId) => {
           <></>
         )}
       </HeaderContainer>
+      <div style={{ height: "10px" }} />
       <ContentContainer>
         <BillTitle>{bill.title}</BillTitle>
         <BillTable bill={bill} />

@@ -95,10 +95,15 @@ const BillCard = ({ content }) => {
     });
   };
 
+  // 참고자료: https://velog.io/@ahsy92/React-소수점을-포함한-숫자에-1000단위-콤마-찍기
+  const addComma = (value) => {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
   return (
     <Button style={{ padding: "10px", margin: "10px" }} onClick={movePage}>
       <HeaderContainer>
-        <Category category={"카테고리1"} />
+        <Category category={content.category} />
         <Proposer>{content.proposer}</Proposer>
         <TagBox>
           {tagArray.map((tag) => {
@@ -107,7 +112,7 @@ const BillCard = ({ content }) => {
         </TagBox>
         <LikesBox>
           <FontAwesomeIcon icon={faHeart} />
-          <Likes>1111</Likes>
+          <Likes>{addComma(1111)}</Likes>
         </LikesBox>
       </HeaderContainer>
       <ContentContainer>

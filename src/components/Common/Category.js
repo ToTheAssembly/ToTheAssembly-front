@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const CategoryBox = styled.div`
-  width: 200px;
+  width: auto;
+  min-width: 200px;
   display: inline-block;
   justify-content: center;
   float: left;
