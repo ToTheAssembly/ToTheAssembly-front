@@ -78,19 +78,26 @@ const LikesBox = styled.div`
 `;
 
 // content: bill(json)
-const BillCard = ({ content }) => {
+const BillCard = (content) => {
+  const contents = content.content;
   const navigate = useNavigate();
+  console.log(content);
 
-  const tag = content.hashtag;
-  const tagArray = tag.split("#");
-  tagArray.shift();
+  const tag = contents.hashtag || null;
+  let tagArray = [];
+
+  // tag가 있을 때
+  if (tag !== null) {
+    tagArray = tag.split("#");
+    tagArray.shift();
+  }
 
   const movePage = () => {
     console.log("movePage");
-    console.log(content);
-    navigate(`/bill/detail/${content.id}`, {
+    console.log(contents);
+    navigate(`/bill/detail/${contents.id}`, {
       state: {
-        billId: content.id,
+        billId: contents.id,
       },
     });
   };
@@ -101,14 +108,25 @@ const BillCard = ({ content }) => {
   };
 
   return (
-    <Button style={{ padding: "10px", margin: "10px" }} onClick={movePage}>
+    <Button
+      style={{
+        padding: "10px",
+        margin: "10px",
+        background: "white",
+      }}
+      onClick={movePage}
+    >
       <HeaderContainer>
-        <Category category={content.category} />
-        <Proposer>{content.proposer}</Proposer>
+        <Category category={contents.category} />
+        <Proposer>{contents.proposer}</Proposer>
         <TagBox>
-          {tagArray.map((tag) => {
-            return <Tag key={tag} hashtag={tag} />;
-          })}
+          {tagArray.length !== 0 ? (
+            tagArray.map((tag) => {
+              return <Tag key={tag} hashtag={tag} />;
+            })
+          ) : (
+            <div></div>
+          )}
         </TagBox>
         <LikesBox>
           <FontAwesomeIcon icon={faHeart} />
@@ -116,8 +134,8 @@ const BillCard = ({ content }) => {
         </LikesBox>
       </HeaderContainer>
       <ContentContainer>
-        <BillTitle>{content.title}</BillTitle>
-        <BillContent>{content.content}</BillContent>
+        <BillTitle>{contents.title}</BillTitle>
+        <BillContent>{contents.content}</BillContent>
       </ContentContainer>
     </Button>
   );
