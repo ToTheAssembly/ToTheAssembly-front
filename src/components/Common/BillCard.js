@@ -3,6 +3,8 @@ import Category from "./Category.js";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Tag from "./Tag.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -26,12 +28,14 @@ const ContentContainer = styled.div`
 `;
 
 const Proposer = styled.div`
-  margin-left: auto;
-  padding: 3px 30px;
+  width: 200px;
+  margin-left: 20px;
+  padding: 6px 30px;
   color: white;
   background: #49446b;
   font-size: 18px;
   font-family: Pretendard;
+  text-align: center;
 `;
 
 const BillTitle = styled.div`
@@ -54,6 +58,25 @@ const Button = styled.button`
   text-align: left;
 `;
 
+const Likes = styled.div`
+  padding: 3px 10px;
+  color: black;
+  font-size: 20px;
+  font-family: Pretendard;
+  text-align: center;
+`;
+
+const LikesBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  padding: 6px 10px;
+  color: black;
+  font-size: 20px;
+`;
+
 // content: bill(json)
 const BillCard = ({ content }) => {
   const navigate = useNavigate();
@@ -72,16 +95,25 @@ const BillCard = ({ content }) => {
     });
   };
 
+  // 참고자료: https://velog.io/@ahsy92/React-소수점을-포함한-숫자에-1000단위-콤마-찍기
+  const addComma = (value) => {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
   return (
     <Button style={{ padding: "10px", margin: "10px" }} onClick={movePage}>
       <HeaderContainer>
-        <Category category={"카테고리1"} />
+        <Category category={content.category} />
+        <Proposer>{content.proposer}</Proposer>
         <TagBox>
           {tagArray.map((tag) => {
             return <Tag key={tag} hashtag={tag} />;
           })}
         </TagBox>
-        <Proposer>{content.proposer}</Proposer>
+        <LikesBox>
+          <FontAwesomeIcon icon={faHeart} />
+          <Likes>{addComma(1111)}</Likes>
+        </LikesBox>
       </HeaderContainer>
       <ContentContainer>
         <BillTitle>{content.title}</BillTitle>
