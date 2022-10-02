@@ -6,22 +6,49 @@ import Tag from '../components/Common/Tag';
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const SearchBackground = styled.div`
-    height: 300px;
+    height: 480px;
     background: #EDF4FA;
 `;
 
 const SearchContainer = styled.div`
     max-width: 600px;
     margin: auto;
+    padding: 160px 0 0 0;
     text-align: center;
+`
+const Input = styled.input`
+    background: #EDF4FA;
+    border: 0px solid black;
+    width: 550px;
+    height: 30px;
+    font-size: 20px;
+    padding: 10px;
+    margin: 0;
+    &: focus { outline: none; }
+`
+const InputUnderLine = styled.hr`
+    display: block;
+    width: 600px;
+    margin: 3px 0 0 0;
+`
+
+const SearchButton = styled(Link)`
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    margin: 0;
+    padding: 3px;
 `
 
 const TagBox = styled.div`
-    width: 400px;
-    margin: auto;
+    width: 100%;
+    margin: 20px auto;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     font-family: Pretendard
 `;
@@ -29,7 +56,8 @@ const TagBox = styled.div`
 // 의안 총계
 const BillCountContainer = styled.div`
     display: flex;
-    height: 320px;
+    flex-wrap: wrap;
+    min-height: 320px;
     max-width: 900px;
     margin: auto;
     background: white;
@@ -101,7 +129,7 @@ const ContentText = styled.div`
 // 인기, 최신 트렌드 분석
 const HotContainer = styled.div`
     display: relative;
-    height: 600px;
+    min-height: 600px;
     background-color: #EDF4FA;
 `
 
@@ -127,16 +155,27 @@ const TrendContainer = styled.div`
     margin: 20px 0 0 0;
 `
 
-const Input = styled.input`
-    background: #EDF4FA;
-    border: 0px solid black;
-`
 
 const MainPage = ({ history }) => {
+
+    const [hashtag, setHashtag] = useState([]);
 
     const [thisWeek, setThisWeek] = useState(0);
     const [thisMonth, setThisMonth] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
+
+    useEffect(() => {
+        axios.get(`/api/hashtag/random`).then((response) => {
+            if(response.data.success) {
+                setHashtag(response.data.randomhash);
+            }
+        })
+    }, []);
+
+    const TagList = hashtag?.map((data, index) => {
+        console.log(data);
+        return <Tag hashtag={data} key={index} />;
+    });
 
     useEffect(() => {
         axios.get(`/api/bill/count`).then((response) => {
@@ -146,7 +185,7 @@ const MainPage = ({ history }) => {
                 setTotalCount(response.data.totalCount);
             }
         })
-    })
+    }, []);
 
 
     return ( true &&
@@ -154,14 +193,19 @@ const MainPage = ({ history }) => {
         
         <SearchBackground>
             <SearchContainer>
-                검색창 작업 중
-              <FontAwesomeIcon icon={faSearch} color="black" />
-                <hr style={{width: '300px'}}/>
-                <hr style={{border: '1px', color: 'silver', width: '90%'}} />
+              <Input type="text" placeholder="검색어를 입력하세요" />
+              <SearchButton >
+                <FontAwesomeIcon icon={faSearch} color="black" fontSize="26px" />
+              </SearchButton>
+              <InputUnderLine />
+    
                 <TagBox>
+                    {hashtag && TagList}
                     <Tag hashtag={"태그1"}/>
                     <Tag hashtag={"태그2"}/>
                     <Tag hashtag={"태그333"}/>
+                    <Tag hashtag={"태그44"}/>
+                    <Tag hashtag={"태그5"}/>
                 </TagBox>
             </SearchContainer>    
         </SearchBackground>
@@ -185,7 +229,7 @@ const MainPage = ({ history }) => {
         </BillCountContainer>
 
         <HotContainer clas="container">
-            <Row style={{margin: '20px auto', padding: '50px 0', maxWidth: '900px'}}>
+            <Row style={{margin: 'auto', padding: '50px 0', maxWidth: '900px'}}>
                 <Col xs={12} sm={6} style={{}}>
                     <PopularContainer>
                         <SubTitle type={"popular-title"}>이번 주 인기 의안</SubTitle>
