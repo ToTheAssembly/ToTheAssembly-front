@@ -5,15 +5,32 @@ import MemberList from "../components/List/MemberList";
 import TagList from "../components/List/TagList";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 const PageContainer = styled.div`
   margin: 0 auto;
   max-width: 1000px;
 `;
 
+const ResultContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: #49446b;
+`;
+
+const Result = styled.div`
+  font-size: 25px;
+  font-family: Pretendard;
+  text-align: center;
+  margin-left: 8px;
+`;
+
 // 값을 받으려나?
 const SearchResultPage = () => {
-  const keyword = useParams().word;
+  const keyword = useParams().keyword;
 
   // search data
   const [bills, setBills] = useState([]);
@@ -36,15 +53,26 @@ const SearchResultPage = () => {
   }, []);
 
   return (
-    <PageContainer>
+    <>
       <div style={{ height: "70px" }} />
-      {/* <BillList content={setBills} /> */}
-      <div style={{ height: "70px" }} /> 
-      <MemberList props={members} />
-      <div style={{ height: "70px" }} />
-      <TagList content={hashtags} />
-      <div style={{ height: "100px" }} />
-    </PageContainer>
+      <ResultContainer>
+        <FontAwesomeIcon
+          icon={faMagnifyingGlass}
+          style={{ fontSize: "40px" }}
+        />
+        <Result>{keyword}에 대한 검색결과입니다.</Result>
+      </ResultContainer>
+
+      <PageContainer>
+        <div style={{ height: "40px" }} />
+        <BillList content={bills} />
+        <div style={{ height: "70px" }} />
+        <MemberList props={members} />
+        <div style={{ height: "70px" }} />
+        <TagList content={hashtags} />
+        <div style={{ height: "100px" }} />
+      </PageContainer>
+    </>
   );
 };
 
