@@ -13,25 +13,26 @@ ul.pagination li {
   display: inline-block;
   width: 35px;
   height: 35px;
-  border: 1px solid #e2e2e2;
+  margin: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1.1rem;
+  font-family: Pretendard;
 }
 
 ul.pagination li:first-child {
-  border-radius: 5px 0 0 5px;
+  border-radius: 20px;
 }
 
 ul.pagination li:last-child {
-  border-radius: 0 5px 5px 0;
+  border-radius: 20px;
 }
 
 ul.pagination li a {
   text-decoration: none;
-  color: #49446B;
-  font-size: 1.2rem;
+  color: #49446b;
+  font-size: 1.5rem;
 }
 
 ul.pagination li.active a {
@@ -39,16 +40,16 @@ ul.pagination li.active a {
 }
 
 ul.pagination li.active {
-  background-color: #779BE0;
+  background-color: #c4c4d7;
+  border-radius: 20px;
 }
 
 ul.pagination li a:hover,
 ul.pagination li a.active {
-  
 }
 
 .page-selection {
   width: 50px;
   height: 35px;
-  color: #779BE0;
+  color: #779be0;
 }
