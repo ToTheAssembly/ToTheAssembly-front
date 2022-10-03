@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import BillCard from '../components/Common/BillCard';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import Paginate from '../components/Common/Paginate';
 
 const PageContainer = styled.div`
   margin: 0 auto;
@@ -73,15 +74,30 @@ const Title = styled.div`
   max-width: 900px
 `
 
+const BillCardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 900px;
+`;
+
+const PagenationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-content
+  margin: 0 auto;
+`;
+
 const MemberDetailPage = (props) => {
   const location = useLocation();
   const memberId = location.state.data;
   const [member, setMember] = useState([]);
+  // 의원이 발의한 의안 목록
+  const [bills, setBills] = useState([]);
+  const [pageNum, setPageNum] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   
   useEffect(() => {
-    console.log("요청");
-    console.log(memberId);
-
     axios.get(`/api/member/${memberId}`).then((response) => {
       console.log(response);
       if (response.data.success) {
@@ -89,6 +105,18 @@ const MemberDetailPage = (props) => {
       }
     });
   }, [memberId]);
+
+  useEffect(() => {
+    axios.get(`/api/bill/name/${memberId}?page=${pageNum}`).then((response) => {
+      if (response.data.success) {
+        setBills(response.data.bills);
+      }
+    });
+  }, [pageNum, memberId]);
+
+  const BillCardList = bills.map((bill) => {
+    return <BillCard key={bill.id} content={bill} />;
+  });
 
   return ( member &&
     <PageContainer className="container">
@@ -111,7 +139,7 @@ const MemberDetailPage = (props) => {
           </MemberInfoRow>
           <MemberInfoRow>
             <MemberInfoAttr>생년월일</MemberInfoAttr>
-            <MemberInfoContent>({member.btn_sl}) {member.bth_date}</MemberInfoContent>
+            <MemberInfoContent>{member.bth_date}</MemberInfoContent>
           </MemberInfoRow>
           <MemberInfoRow>
             <MemberInfoAttr>직책명</MemberInfoAttr>
@@ -148,12 +176,13 @@ const MemberDetailPage = (props) => {
 
     
       <Title>■ 발의한 법안 목록</Title>
-      <Row style={{margin: 'auto',  maxWidth: '900px'}}>
-        {/* <BillCard billContent={1} />
-        <BillCard billContent={2} />
-        <BillCard billContent={3} /> */}
-      </Row>
-
+      <BillCardContainer>
+        {BillCardList}
+      </BillCardContainer>
+      <PagenationContainer>
+          {/*페이지네이션*/}
+          <Paginate page={pageNum} setPage={setPageNum} totalPage={totalPage} />
+        </PagenationContainer>
       <div style={{height: '100px'}} />
     </PageContainer>
   )
