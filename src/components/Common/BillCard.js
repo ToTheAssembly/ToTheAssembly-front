@@ -138,7 +138,7 @@ const BillCard = (content) => {
         </TagBox>
         <LikesBox>
           <FontAwesomeIcon icon={faHeart} />
-          <Likes>{addComma(1111)}</Likes>
+          <Likes>{addComma(contents.likeCount || 0)}</Likes>
         </LikesBox>
       </HeaderContainer>
       <ContentContainer>

@@ -93,14 +93,15 @@ const BillDetail = (billId) => {
       try {
         //console.log(billId.billId);
         const response = await axios.get(`/api/bill/${id}`);
+        console.log(response.data);
         setBill(response.data.bill);
-        console.log(response.data.bill);
+        setLikeCount(response.data.likeCount);
       } catch (e) {
         console.log(e);
       }
     };
     fetchData();
-  }, []);
+  }, [billId]);
 
   useEffect(() => {
     if (bill.length != 0) {
@@ -120,19 +121,6 @@ const BillDetail = (billId) => {
     }
   }, [tags]);
 
-  useEffect(() => {
-    //console.log("BillDetailPage");
-    const fetchData = async () => {
-      try {
-        console.log("좋아요!");
-        console.log(select);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchData();
-  }, [select]);
-
   // 1000단위로 comma 추가
   const addComma = (value) => {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -140,8 +128,19 @@ const BillDetail = (billId) => {
 
   // 좋아요 추가
   const addLike = () => {
-    if (!select) setSelect(!select);
-    else setSelect(true);
+    console.log(select);
+    if (!select) {
+      setSelect(!select);
+      const fetchData = async () => {
+        try {
+          const response = await axios.post(`/api/bill/${id}/like`);
+          console.log("response", response);
+        } catch (e) {
+          console.log(e);
+        }
+      };
+      fetchData();
+    } else setSelect(true);
   };
 
   return (
@@ -159,7 +158,7 @@ const BillDetail = (billId) => {
         )}
         <LikesBox selected={select} onClick={() => addLike()}>
           <FontAwesomeIcon icon={faHeart} />
-          <Likes selected={select}>{addComma(1111)}</Likes>
+          <Likes selected={select}>{addComma(likeCount)}</Likes>
         </LikesBox>
       </HeaderContainer>
       <div style={{ height: "10px" }} />
