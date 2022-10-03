@@ -57,7 +57,9 @@ const MemberInfo = styled.div`
 const MemberOrigin = styled.div`
   font-size: 15px;
   font-family: Pretendard;
-  margin: 6px 0px 0px 0px;
+  margin: 8px 0 0 0;
+  padding: 0;
+  line-height: 1em;
   color: #779BE0;
 `
 
