@@ -55,7 +55,7 @@ const CategoryResultPage = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `/api/bill/category/search/${category}`
+          `/api/bill/category/search/${category}?page=${page}`
         );
         console.log(response.data);
         setBills(response.data.bills);
@@ -65,7 +65,7 @@ const CategoryResultPage = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [page]);
 
   // 의안 목록 생성
   const listItem = () => {

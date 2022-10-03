@@ -54,7 +54,9 @@ const HashtagResultPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/api/hashtag/search/${hashtag}`);
+        const response = await axios.get(
+          `/api/hashtag/search/${hashtag}?page=${page}`
+        );
         console.log(response.data);
         setBills(response.data.bills);
         setTotalPage(response.data.bills.length);
@@ -63,7 +65,7 @@ const HashtagResultPage = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [page]);
 
   // 의안 목록 생성
   const listItem = () => {
