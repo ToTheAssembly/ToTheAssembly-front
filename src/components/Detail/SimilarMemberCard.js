@@ -5,8 +5,7 @@ import MemberCard from "../Common/MemberCard";
 import Tag from "../Common/Tag";
 
 const MemberContainer = styled.div`
-  display: flex;
-  flex-direction: row;
+  display: inline-block;
   margin: 0 auto;
 `;
 
@@ -29,14 +28,16 @@ const Summary = styled.div`
   font-family: Pretendard;
 `;
 
-const SimilarMemberCard = ({ member }) => {
-  // member: 국회의원의 정보(json)
+const SimilarMemberCard = (props) => {
+  const data = props.data;
+  console.log(data);
+
   return (
-    <div>
+    <Col md={6}>
       <MemberContainer>
         <Row>
           <Col>
-            <MemberCard />
+            <MemberCard data={data} />
           </Col>
           <Col>
             <ContentBox>
@@ -52,7 +53,7 @@ const SimilarMemberCard = ({ member }) => {
           </Col>
         </Row>
       </MemberContainer>
-    </div>
+    </Col>
   );
 };
 
