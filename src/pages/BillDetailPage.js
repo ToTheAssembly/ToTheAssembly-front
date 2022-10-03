@@ -5,6 +5,7 @@ import SimilarBillList from "../components/Detail/SimilarBillList";
 import SimilarMemberList from "../components/Detail/SimilarMemberList";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Spinner from "../components/Common/Spinner";
 
 const PageContainer = styled.div`
   margin: 0 auto;
@@ -17,15 +18,17 @@ const BillDetailPage = () => {
 
   const [bills, setBills] = useState([]);
   const [members, setMembers] = useState([]);
+  const [spinner, setSpinner] = useState(null);
 
   useEffect(() => {
-    console.log("useEffect BillListPage!", billId);
+    setSpinner(true);
     const fetchData = async () => {
       try {
         const response = await axios.get(`/api/bill/${billId}/similar`);
         setBills(response.data.bills);
         setMembers(response.data.members);
         console.log(response.data);
+        setSpinner(false);
       } catch (e) {
         console.log(e);
       }
@@ -37,10 +40,16 @@ const BillDetailPage = () => {
     <PageContainer>
       <BillDetail billId={billId} />
       <div style={{ height: "70px" }} />
-      <SimilarBillList data={bills} />
-      <div style={{ height: "70px" }} />
-      <SimilarMemberList data={members} />
-      <div style={{ height: "100px" }} />
+      {spinner ? (
+        <Spinner />
+      ) : (
+        <>
+          <SimilarBillList data={bills} />
+          <div style={{ height: "70px" }} />
+          <SimilarMemberList data={members} />
+          <div style={{ height: "100px" }} />
+        </>
+      )}
     </PageContainer>
   );
 };
