@@ -101,7 +101,7 @@ const BillDetail = (billId) => {
       }
     };
     fetchData();
-  }, [billId]);
+  }, [billId, select]);
 
   useEffect(() => {
     if (bill.length != 0) {
