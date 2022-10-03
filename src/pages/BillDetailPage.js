@@ -13,13 +13,13 @@ const PageContainer = styled.div`
 
 const BillDetailPage = () => {
   const { billId } = useParams();
-  //console.log("billId: ", billId);
+  console.log("billId: ", billId);
 
   const [bills, setBills] = useState([]);
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
-    console.log("useEffect BillListPage!");
+    console.log("useEffect BillListPage!", billId);
     const fetchData = async () => {
       try {
         const response = await axios.get(`/api/bill/${billId}/similar`);
@@ -31,7 +31,7 @@ const BillDetailPage = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [billId]);
 
   return (
     <PageContainer>

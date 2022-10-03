@@ -20,6 +20,7 @@ const Title = styled.div`
 
 const SimilarBillList = (props) => {
   const data = props.data;
+  console.log(data);
 
   return (
     <div>
