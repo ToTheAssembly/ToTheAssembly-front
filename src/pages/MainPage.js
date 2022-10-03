@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Tag from '../components/Common/Tag';
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faBreadSlice, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -126,7 +126,7 @@ const ContentText = styled.div`
 `
 
 
-// 인기, 최신 트렌드 분석
+// 인기, 최신, 트렌드 분석
 const HotContainer = styled.div`
     display: relative;
     min-height: 600px;
@@ -136,21 +136,21 @@ const HotContainer = styled.div`
 // 인기
 const PopularContainer = styled.div`
     padding: 20px;
-    height: 190px;
+    height: 210px;
     background-color: #49446B;
     margin: 20px 0 0 0;
 `
 // 최신
 const RecencyContainer = styled.div`
     padding: 20px;
-    height: 190px;
+    height: 210px;
     background-color: #C4C4D7;
     margin: 20px 0 0 0;
 `
 // 트렌드 분석 페이지로 이동
 const TrendContainer = styled.div`
     padding: 20px;
-    height: 400px;
+    height: 440px;
     background-color: #779BE0;
     margin: 20px 0 0 0;
 `
@@ -164,6 +164,9 @@ const MainPage = ({ history }) => {
     const [thisMonth, setThisMonth] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
 
+    const [recentBill, setResentBill] = useState([]);
+    const [popularBill, setPopularBill] = useState([]);
+
     useEffect(() => {
         axios.get(`/api/hashtag/random`).then((response) => {
             if(response.data.success) {
@@ -173,7 +176,6 @@ const MainPage = ({ history }) => {
     }, []);
 
     const TagList = hashtag?.map((data, index) => {
-        console.log(data);
         return <Tag hashtag={data} key={index} />;
     });
 
@@ -187,6 +189,36 @@ const MainPage = ({ history }) => {
         })
     }, []);
 
+    // 이번 주 인기 의안
+    useEffect(() => {
+        axios.get(`/api/bill/thisWeek`).then((response) => {
+            if(response.data.success) {
+                const bills = response.data.bills.slice(0, 5);
+                setPopularBill(bills);
+            }
+        })
+    }, []);
+    const PopularBillList = popularBill?.map((data, index) => {
+        return <ContentText type={"popular-text"}>· {data}</ContentText>;
+    });
+    
+    // 최근 발의된 의안
+    useEffect(() => {
+        axios.get(`/api/bill/list?page=1&sort=1`).then((response) => {
+            if(response.data.success) {
+                const bills = response.data.bills.slice(0, 5);
+                setResentBill(bills);
+            }
+        })
+    }, []);
+    const RecentBillList = recentBill?.map((data, index) => {
+        return (
+        <Link style={{textDecoration: 'none'}} to={`/bill/detail/${data.id}`} state={{billId: data.id}}>
+            <ContentText type={"recency-text"}>
+                · {data.title}
+            </ContentText>
+        </Link>);
+    });
 
     return ( true &&
         <>
@@ -201,11 +233,6 @@ const MainPage = ({ history }) => {
     
                 <TagBox>
                     {hashtag && TagList}
-                    <Tag hashtag={"태그1"}/>
-                    <Tag hashtag={"태그2"}/>
-                    <Tag hashtag={"태그333"}/>
-                    <Tag hashtag={"태그44"}/>
-                    <Tag hashtag={"태그5"}/>
                 </TagBox>
             </SearchContainer>    
         </SearchBackground>
@@ -229,19 +256,22 @@ const MainPage = ({ history }) => {
         </BillCountContainer>
 
         <HotContainer clas="container">
-            <Row style={{margin: 'auto', padding: '50px 0', maxWidth: '900px'}}>
+            <Row style={{margin: 'auto', padding: '50px 0', maxWidth: '960px'}}>
                 <Col xs={12} sm={6} style={{}}>
                     <PopularContainer>
                         <SubTitle type={"popular-title"}>이번 주 인기 의안</SubTitle>
-                        <ContentText type={"popular-text"}>· 텍스트</ContentText>
-                        <ContentText type={"popular-text"}>· 텍스트</ContentText>
-                        <ContentText type={"popular-text"}>· 텍스트</ContentText>
+                        {!popularBill ? PopularBillList
+                        :
+                        <>
+                        <ContentText type={"popular-text"}>· 인기 의안1</ContentText>
+                        <ContentText type={"popular-text"}>· 인기 의안2</ContentText>
+                        <ContentText type={"popular-text"}>· 인기 의안3</ContentText> 
+                        </>
+                        }
                     </PopularContainer>
                     <RecencyContainer>
                         <SubTitle type={"recency-title"}>최근 발의된 의안</SubTitle>
-                        <ContentText type={"recency-text"}>· 텍스트</ContentText>
-                        <ContentText type={"recency-text"}>· 텍스트</ContentText>
-                        <ContentText type={"recency-text"}>· 텍스트</ContentText>
+                        {recentBill && RecentBillList}
                     </RecencyContainer>
                 </Col>
                 <Col xs={12} sm={6} style={{}}>
