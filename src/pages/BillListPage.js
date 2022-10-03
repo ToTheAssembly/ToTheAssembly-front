@@ -38,14 +38,24 @@ const SelectSortBtn = styled.button`
   float: right;
   display: flex;
   padding: 3px 30px;
-  color: #49446b;
-  background: #ccd4e4;
   font-size: 20px;
   border: none;
+
+  ${(props) =>
+    props.select === "active"
+      ? `
+      background: #779BE0;
+      color: white;
+  `
+      : `
+      background: #CCD4E4;
+      font-color: 49446B;
+`}
 `;
 
 const BillCardContainer = styled.div`
   display: flex;
+  flex-direction: column;
   margin: 0 auto;
 `;
 
@@ -53,6 +63,11 @@ const PagenationContainer = styled.div`
   display: flex;
   margin: 0 auto;
 `;
+
+const sortType = {
+  1: "최신순",
+  2: "인기순",
+};
 
 const BillListPage = () => {
   // pagination
@@ -84,7 +99,7 @@ const BillListPage = () => {
 
   // sort Event 1: 최신순, 2: 인기순
   const sortEvent = (e) => {
-    //console.log(e.target.name);
+    console.log(e.target.name);
     e.target.name === "최신순" ? setSort(1) : setSort(2);
   };
 
@@ -104,19 +119,25 @@ const BillListPage = () => {
       <div style={{ height: "20px" }} />
       <BillPageContainer>
         <SelectSortContaier>
+          {/*sort*/}
           <SelectSortBox>
-            <SelectSortBtn name={"최신순"} onClick={sortEvent}>
-              최신순
-            </SelectSortBtn>
-            <SelectSortBtn name={"인기순"} onClick={sortEvent}>
-              인기순
-            </SelectSortBtn>
+            {Object.values(sortType).map((sortType, index) => (
+              <SelectSortBtn
+                key={index + 1}
+                name={sortType}
+                onClick={sortEvent}
+                select={sort === index + 1 ? "active" : "default"}
+              >
+                {sortType}
+              </SelectSortBtn>
+            ))}
           </SelectSortBox>
         </SelectSortContaier>
         <BillCardContainer>
           {/*의안 목록*/}
-          <Row>{listItem()}</Row>
+          {listItem()}
         </BillCardContainer>
+        <div style={{ height: "70px" }} />
         <PagenationContainer>
           {/*페이지네이션*/}
           <Paginate page={page} setPage={setPage} totalPage={totalPage} />

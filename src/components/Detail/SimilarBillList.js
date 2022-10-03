@@ -4,8 +4,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const BillContainer = styled.div`
-  padding: 5px;
+  padding: 20px;
   background: #c4c4d7;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Title = styled.div`
@@ -16,30 +18,16 @@ const Title = styled.div`
   font-family: Pretendard;
 `;
 
-const SimilarBillList = (billId) => {
-  const [bills, setBills] = useState([]);
-
-  useEffect(() => {
-    console.log("SimilarBillList");
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`/api/bill/${billId.billId}/similar`);
-        setBills(response.data.bills);
-        console.log(response.data.bills);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchData();
-  }, []);
+const SimilarBillList = (props) => {
+  const data = props.data;
 
   return (
     <div>
       <Title>유사한 의안</Title>
       <BillContainer>
-        {bills.length != 0 ? (
-          bills.map((bill) => {
-            return <BillCard key={bill.bill_num} content={bill} />;
+        {data.length != 0 ? (
+          data.map((bill, index) => {
+            return <BillCard key={index} content={bill} />;
           })
         ) : (
           <></>

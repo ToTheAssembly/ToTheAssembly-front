@@ -25,6 +25,11 @@ const TagBox = styled.div`
 const ContentContainer = styled.div`
   margin-top: 7px;
   padding: 10px;
+  transition: 0.5s;
+
+  &:hover {
+    color: blue;
+  }
 `;
 
 const Proposer = styled.div`
@@ -54,8 +59,13 @@ const BillContent = styled.div`
 
 const Button = styled.button`
   border: solid 1px gray;
-  background: none;
+  background: white;
   text-align: left;
+  transition: 0.5s;
+
+  &:hover {
+    background: #f3f6f8;
+  }
 `;
 
 const Likes = styled.div`
@@ -93,7 +103,6 @@ const BillCard = (content) => {
   }
 
   const movePage = () => {
-    console.log("movePage");
     console.log(contents);
     navigate(`/bill/detail/${contents.id}`, {
       state: {
@@ -111,8 +120,7 @@ const BillCard = (content) => {
     <Button
       style={{
         padding: "10px",
-        margin: "10px",
-        background: "white",
+        marginTop: "20px",
       }}
       onClick={movePage}
     >
