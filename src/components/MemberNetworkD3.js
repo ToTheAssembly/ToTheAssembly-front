@@ -1,24 +1,25 @@
+import { text } from 'd3';
 import React, { useEffect, useRef, useState } from 'react';
 const d3 = require("d3");
 
-const MemberNetworkD3 = ( {nodes} ) => {
-  const width = 200;
-  const height = 200;
+const MemberNetworkD3 = ( {props} ) => {
+  const width = 240;
+  const height = 240;
 
   const svgRef = useRef();
 
   const [graph, setGraph] = useState({
     nodes: [
-      { id: 0, color: "#49446B", size: 11 },
-      { id: 1, size: 11, text: "환경" },
-      { id: 2, size: 9 },
-      { id: 3, size: 8 },
-      { id: 4, size: 9 },
-      { id: 5, size: 10 },
-      { id: 6, size: 7 },
-      { id: 7, size: 7 },
-      { id: 8, size: 7 },
-      { id: 9, size: 7 }
+      { id: 0, color: "#49446B", textColor: "white", size: 28, label: "2022년 8월" },
+      { id: 1, color: "#B9C5EB", size: 18, label: "환경", amount: 32 },
+      { id: 2, color: "#B9C5EB", size: 16, label: "재활용", amount: 28 },
+      { id: 3, color: "#B9C5EB", size: 12, label: "탄소", amount: 27 },
+      { id: 4, size: 12 },
+      { id: 5, size: 12 },
+      { id: 6, size: 12 },
+      { id: 7, size: 10 },
+      { id: 8, size: 10 },
+      { id: 9, size: 10 }
     ],
     links: [
       { source: 0, target: 0 },
@@ -47,16 +48,28 @@ const MemberNetworkD3 = ( {nodes} ) => {
         .data(graph.links)
         .join("line")
         .classed("link", true)
-        
-    const node = svg
-        .selectAll(".node")
+    const node = svg.selectAll(".node")
         .data(graph.nodes)
         .join("circle")
         .attr("r", 7)
         .classed("node", true)
-        .classed("fixed", d => d.fx !== undefined)
-        .text(d => d.text || "");
-  
+    const label = svg.selectAll(".label")
+        .data(graph.nodes)
+        .join("text")
+        .classed("text", true)
+        .attr("dy", -2)
+        .attr("dx", 5)
+        .text(d => d.label)
+        ;
+    const amount = svg.selectAll(".amount")
+        .data(graph.nodes)
+        .join("text")
+        .classed("text", true)
+        .attr("dy", -8)
+        .attr("dx", 8)
+        .text(d => d.amount)
+        ;
+
     svg.node();
   
     const simulation = d3
@@ -81,13 +94,29 @@ const MemberNetworkD3 = ( {nodes} ) => {
         .attr("y1", d => d.source.y)
         .attr("x2", d => d.target.x)
         .attr("y2", d => d.target.y)
-        .style("stroke", "gray")
+        //.style("stroke", "gray")
         .lower();
       node
         .attr("cx", d => d.x)
         .attr("cy", d => d.y)
         .attr("r", d => d.size || 5)
-        .style("fill", d => d.color || "#A39DBC");
+        //.style("stroke", "white")
+        .style("opacity", 1)
+        .style("fill", d => d.color || "#CED2EE");
+      label
+        .attr("x", d => d.x - 5) //position of the lower left point of the text
+        .attr("y", d => d.y + 5) //position of the lower left point of the text
+        .attr("text-anchor","middle")
+        .style("fill", d => d.textColor || "#49446B")
+        .style("font-size", "6px")
+        .style("font-family", "Pretendard");
+      amount 
+        .attr("x", d => d.x - 4) //position of the lower left point of the text
+        .attr("y", d => d.y + 4) //position of the lower left point of the text
+        .attr("text-anchor","middle")
+        .style("fill", "white")
+        .style("font-size", "4px")
+        .style("font-family", "Pretendard");
     }
   
     function dragstart(event, d) {
@@ -100,7 +129,7 @@ const MemberNetworkD3 = ( {nodes} ) => {
       d.fy = clamp(event.y, 0, height);
     }
     function dragend(event, d) {
-      simulation.alphaTarget(0);
+      simulation.alphaTarget(0.9);
       d.fx = null;
       d.fy = null;
     }
