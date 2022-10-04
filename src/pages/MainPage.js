@@ -199,14 +199,22 @@ const MainPage = ({ history }) => {
       if (response.data.success) {
         const bills = response.data.bills.slice(0, 5);
         setPopularBill(bills);
+        console.log(bills);
       }
     });
   }, []);
-  const PopularBillList = popularBill?.map((data, index) => {
+  const PopularBillList = Object.values(popularBill)?.map((data, index) => {
     return (
-      <ContentText key={index} type={"popular-text"}>
-        · {data}
-      </ContentText>
+      <Link
+        key={index}
+        style={{ textDecoration: "none" }}
+        to={`/bill/detail/${data.id}`}
+        state={{ billId: data.id }}
+      >
+        <ContentText key={index} type={"popular-text"}>
+          · {data.title}
+        </ContentText>
+      </Link>
     );
   });
 
@@ -222,6 +230,7 @@ const MainPage = ({ history }) => {
   const RecentBillList = recentBill?.map((data, index) => {
     return (
       <Link
+        key={index}
         style={{ textDecoration: "none" }}
         to={`/bill/detail/${data.id}`}
         state={{ billId: data.id }}
@@ -234,16 +243,6 @@ const MainPage = ({ history }) => {
   // 키워드 변경, state에 저장
   const changeWord = (e) => {
     setWord(e.target.value);
-  };
-
-  // 페이지 이동
-  const movePage = () => {
-    console.log(word);
-    navigate(`/search/${word}`, {
-      state: {
-        word: word,
-      },
-    });
   };
 
   return (
@@ -287,21 +286,7 @@ const MainPage = ({ history }) => {
             <Col xs={12} sm={6} style={{}}>
               <PopularContainer>
                 <SubTitle type={"popular-title"}>이번 주 인기 의안</SubTitle>
-                {!popularBill ? (
-                  PopularBillList
-                ) : (
-                  <>
-                    <ContentText type={"popular-text"}>
-                      · 인기 의안1
-                    </ContentText>
-                    <ContentText type={"popular-text"}>
-                      · 인기 의안2
-                    </ContentText>
-                    <ContentText type={"popular-text"}>
-                      · 인기 의안3
-                    </ContentText>
-                  </>
-                )}
+                {popularBill ? PopularBillList : <></>}
               </PopularContainer>
               <RecencyContainer>
                 <SubTitle type={"recency-title"}>최근 발의된 의안</SubTitle>
