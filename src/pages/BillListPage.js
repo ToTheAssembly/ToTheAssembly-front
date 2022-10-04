@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Paginate from "../components/Common/Paginate.js";
 import axios from "axios";
+import Category from "../components/Common/Category.js";
 
 const BillPageContainer = styled.div`
   display: flex;
@@ -14,10 +15,13 @@ const BillPageContainer = styled.div`
 `;
 
 const CategoryList = styled.div`
-  height: 160px;
   display: flex;
-  padding: 1px;
-  background: #d9d9d9;
+  flex-wrap: wrap;
+  height: 180px;
+  justify-content: center;
+  align-items: center;
+  background: #edf4fa;
+  padding: 30px 50px;
 `;
 
 const SelectSortContaier = styled.div`
@@ -74,21 +78,20 @@ const BillListPage = () => {
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
+  const [category, setCategory] = useState([]);
 
   // bills
   const [bills, setBills] = useState([]);
 
-  // sort, page, state가 변할 때 렌더링
+  // category 렌더링
   useEffect(() => {
-    console.log("useEffect BillListPage!");
     const fetchData = async () => {
       try {
         const response = await axios.get(
           `/api/bill/list?sort=${sort}&page=${page}`
         );
+
         setBills(response.data.bills);
-        console.log(response.data.bills);
-        console.log(response.data.bills.length);
         setTotalPage(response.data.bills.length);
       } catch (e) {
         console.log(e);
@@ -96,6 +99,18 @@ const BillListPage = () => {
     };
     fetchData();
   }, [sort, page]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/api/bill/category/categoryList`);
+        setCategory(response.data.categories);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
 
   // sort Event 1: 최신순, 2: 인기순
   const sortEvent = (e) => {
@@ -112,39 +127,52 @@ const BillListPage = () => {
 
     return billList;
   };
+  // 카테고리 목록 생성
+  const listCategory = () => {
+    // 카테고리 map
+    console.log(category);
+    const list = category.slice(0, 10);
+    const categories = list.map((cat, index) => {
+      return <Category key={index} category={cat.category} />;
+    });
+    //console.log(billList.length);
+
+    return categories;
+  };
 
   return (
-    <div>
-      <CategoryList>카테고리 목록이 들어갑니다.</CategoryList>
-      <div style={{ height: "20px" }} />
-      <BillPageContainer>
-        <SelectSortContaier>
-          {/*sort*/}
-          <SelectSortBox>
-            {Object.values(sortType).map((sortType, index) => (
-              <SelectSortBtn
-                key={index + 1}
-                name={sortType}
-                onClick={sortEvent}
-                select={sort === index + 1 ? "active" : "default"}
-              >
-                {sortType}
-              </SelectSortBtn>
-            ))}
-          </SelectSortBox>
-        </SelectSortContaier>
-        <BillCardContainer>
-          {/*의안 목록*/}
-          {listItem()}
-        </BillCardContainer>
-        <div style={{ height: "70px" }} />
-        <PagenationContainer>
-          {/*페이지네이션*/}
-          <Paginate page={page} setPage={setPage} totalPage={totalPage} />
-        </PagenationContainer>
-      </BillPageContainer>
-      <div style={{ height: "100px" }} />
-    </div>
+    bills && (
+      <div>
+        <CategoryList>{listCategory()}</CategoryList>
+        <BillPageContainer>
+          <SelectSortContaier>
+            {/*sort*/}
+            <SelectSortBox>
+              {Object.values(sortType).map((sortType, index) => (
+                <SelectSortBtn
+                  key={index + 1}
+                  name={sortType}
+                  onClick={sortEvent}
+                  select={sort === index + 1 ? "active" : "default"}
+                >
+                  {sortType}
+                </SelectSortBtn>
+              ))}
+            </SelectSortBox>
+          </SelectSortContaier>
+          <BillCardContainer>
+            {/*의안 목록*/}
+            {listItem()}
+          </BillCardContainer>
+          <div style={{ height: "70px" }} />
+          <PagenationContainer>
+            {/*페이지네이션*/}
+            <Paginate page={page} setPage={setPage} totalPage={totalPage} />
+          </PagenationContainer>
+        </BillPageContainer>
+        <div style={{ height: "100px" }} />
+      </div>
+    )
   );
 };
 

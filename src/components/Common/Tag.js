@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const TagText = styled(Link)`
-  display: flex;
+  display: inline-block;
   margin: 3px;
-  padding: 0.5px 5px;
+  padding: 3px 7px;
   color: #779be0;
   background: white;
   border-radius: 3px;

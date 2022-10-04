@@ -203,7 +203,11 @@ const MainPage = ({ history }) => {
     });
   }, []);
   const PopularBillList = popularBill?.map((data, index) => {
-    return <ContentText type={"popular-text"}>· {data}</ContentText>;
+    return (
+      <ContentText key={index} type={"popular-text"}>
+        · {data}
+      </ContentText>
+    );
   });
 
   // 최근 발의된 의안

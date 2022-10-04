@@ -17,8 +17,7 @@ const ContentBox = styled.div`
 `;
 
 const TagBox = styled.div`
-  display: flex;
-  flex-direction: row;
+  display: inline-block;
   margin-top: 15px;
   font-family: Pretendard;
 `;
@@ -30,7 +29,17 @@ const Summary = styled.div`
 
 const SimilarMemberCard = (props) => {
   const data = props.data;
-  console.log(data);
+  const bill = data.bill;
+
+  // 태그가 없을 때
+  const tag = bill.hashtag || null;
+  let tagArray = [];
+
+  // tag가 있을 때
+  if (tag !== null) {
+    tagArray = tag.split("#");
+    tagArray.shift();
+  }
 
   return (
     <Col md={6}>
@@ -41,13 +50,15 @@ const SimilarMemberCard = (props) => {
           </Col>
           <Col>
             <ContentBox>
-              <Summary>
-                자원의 절약과 재활용촉진에 관한 법률 일부개정법률안
-              </Summary>
+              <Summary>{bill.title}</Summary>
               <TagBox>
-                <Tag hashtag={"태그"} />
-                <Tag hashtag={"태그"} />
-                <Tag hashtag={"태그"} />
+                {tagArray.length !== 0 ? (
+                  tagArray.map((tag) => {
+                    return <Tag key={tag} hashtag={tag} />;
+                  })
+                ) : (
+                  <div></div>
+                )}
               </TagBox>
             </ContentBox>
           </Col>

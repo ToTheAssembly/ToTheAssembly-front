@@ -6,13 +6,11 @@ const CategoryBox = styled(Link)`
   width: auto;
   min-width: 200px;
   display: inline-block;
-  justify-content: center;
-  float: left;
   padding: 6px 30px;
   background: #ccd4e4;
   font-size: 12px;
   text-align: center;
-  margin: 5px;
+  margin: 0 3px;
   text-decoration: none;
   color: black;
 `;
