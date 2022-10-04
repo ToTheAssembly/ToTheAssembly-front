@@ -1,24 +1,26 @@
-import React from 'react';
+import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-const TagText = styled.div`
-  display: flex;
+const TagText = styled(Link)`
+  display: inline-block;
   margin: 3px;
-  padding: 0.5px 5px;
-  color: #779BE0;
+  padding: 3px 7px;
+  color: #779be0;
   background: white;
   border-radius: 3px;
   font-size: 20px;
-  font-family: Pretendard
+  font-family: Pretendard;
+  text-decoration: none;
 `;
 
-const Tag = ({hashtag}) => {
+const Tag = ({ hashtag }) => {
   // hashtag: string
   return (
-    <TagText>
+    <TagText to={`/hashtag/search/${hashtag}`} state={hashtag}>
       #{hashtag}
     </TagText>
-  )
-}
+  );
+};
 
 export default Tag;

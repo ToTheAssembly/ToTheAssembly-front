@@ -13,6 +13,8 @@ import MemberDetailPage from "./pages/MemberDetailPage";
 import SearchResultPage from "./pages/SearchResultPage";
 import VocaPage from "./pages/VocaPage";
 import TrendPage from "./pages/TrendPage";
+import HashtagResultPage from "./pages/HashtagResultPage";
+import CategoryResultPage from "./pages/CategoryResultPage";
 
 function App() {
   return (
@@ -27,6 +29,14 @@ function App() {
         <Route path="/search/:keyword" element={<SearchResultPage />} />
         <Route path="/voca" element={<VocaPage />} />
         <Route path="/trend" element={<TrendPage />} />
+        <Route
+          path="/hashtag/search/:hashtag"
+          element={<HashtagResultPage />}
+        />
+        <Route
+          path="/category/search/:category"
+          element={<CategoryResultPage />}
+        />
       </Routes>
     </>
   );
