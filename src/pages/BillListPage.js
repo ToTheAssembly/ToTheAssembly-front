@@ -17,11 +17,17 @@ const BillPageContainer = styled.div`
 const CategoryList = styled.div`
   display: flex;
   flex-wrap: wrap;
-  height: 180px;
+  height: 250px;
+  background: #edf4fa;
+  padding: 30px 30px;
+`;
+
+const CategoryBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  background: #edf4fa;
-  padding: 30px 50px;
+  padding: 30px 30px;
 `;
 
 const SelectSortContaier = styled.div`
@@ -143,7 +149,9 @@ const BillListPage = () => {
   return (
     bills && (
       <div>
-        <CategoryList>{listCategory()}</CategoryList>
+        <CategoryList>
+          <CategoryBox>{listCategory()}</CategoryBox>
+        </CategoryList>
         <BillPageContainer>
           <SelectSortContaier>
             {/*sort*/}
