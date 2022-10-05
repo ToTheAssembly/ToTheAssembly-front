@@ -10,7 +10,7 @@ const CategoryBox = styled(Link)`
   background: #ccd4e4;
   font-size: 12px;
   text-align: center;
-  margin: 0 3px;
+  margin: 5px;
   text-decoration: none;
   color: black;
 `;
