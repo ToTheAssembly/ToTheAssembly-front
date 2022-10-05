@@ -27,6 +27,12 @@ const Summary = styled.div`
   font-family: Pretendard;
 `;
 
+const NullBill = styled.div`
+  color: white;
+  font-size: 20px;
+  font-family: Pretendard;
+`;
+
 const SimilarMemberCard = (props) => {
   const data = props.data;
   const bill = data.bill;
@@ -66,7 +72,9 @@ const SimilarMemberCard = (props) => {
                 </TagBox>
               </ContentBox>
             ) : (
-              <></>
+              <ContentBox>
+                <NullBill>대표로 발의한 의안이 없습니다.</NullBill>
+              </ContentBox>
             )}
           </Col>
         </Row>

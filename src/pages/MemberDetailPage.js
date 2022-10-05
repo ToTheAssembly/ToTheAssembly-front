@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import BillCard from '../components/Common/BillCard';
-import { useLocation } from 'react-router-dom';
-import axios from 'axios';
-import Paginate from '../components/Common/Paginate';
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import Paginate from "../components/Common/Paginate";
+import MemberCard from "../components/Common/MemberCard";
+import BillCard from "../components/Common/BillCard";
+import Spinner from "../components/Common/Spinner";
 
 const PageContainer = styled.div`
   margin: 0 auto;
@@ -15,35 +17,35 @@ const MemberImage = styled.img`
   display: block;
   width: 270px;
   height: 360px;
-  background: #D9D9D9;
+  background: #d9d9d9;
   position: relative;
   margin: auto;
-`
+`;
 
 const TEXTSTYLE = {
   // background-color, color
-  "국민의힘": ['#F01C2A', 'white'],
-  "더불어민주당": ['#004EA1', 'white'],
-  "정의당": ['#FFED00', 'black'],
-  "기본소득당": ['#00D2C3', '#19233C'],
-  "시대전환당": ['#EDD9EB','#4F2685'],
-  "무소속": ['#505050', '#ffffff']
-}
+  국민의힘: ["#F01C2A", "white"],
+  더불어민주당: ["#004EA1", "white"],
+  정의당: ["#FFED00", "black"],
+  기본소득당: ["#00D2C3", "#19233C"],
+  시대전환당: ["#EDD9EB", "#4F2685"],
+  무소속: ["#505050", "#ffffff"],
+};
 
 const MemberParty = styled.p`
   width: 130px;
   text-align: center;
   font-family: pretendard;
   font-size: 18px;
-  background-color: ${props => TEXTSTYLE[props.type][0]};
-  color: ${props => TEXTSTYLE[props.type][1]};
+  background-color: ${(props) => TEXTSTYLE[props.type][0]};
+  color: ${(props) => TEXTSTYLE[props.type][1]};
   margin: auto;
-`
+`;
 
 const MemberInfoRow = styled.div`
-  margin: 12px; 
+  margin: 12px;
   clear: both;
-`
+`;
 
 const MemberInfoAttr = styled.div`
   display: inline-block;
@@ -54,9 +56,9 @@ const MemberInfoAttr = styled.div`
   padding: 5px;
   font-family: pretendard;
   font-size: 16px;
-  background-color: #A39DBC;
+  background-color: #a39dbc;
   color: white;
-`
+`;
 
 const MemberInfoContent = styled.div`
   display: inline-block;
@@ -64,15 +66,15 @@ const MemberInfoContent = styled.div`
   font-size: 16px;
   color: black;
   margin: 0 16px;
-`
+`;
 
 const Title = styled.div`
   font-family: Pretendard;
-  color: #49446B;
+  color: #49446b;
   font-size: 24px;
   margin: 30px auto 20px;
-  max-width: 900px
-`
+  max-width: 900px;
+`;
 
 const BillCardContainer = styled.div`
   display: flex;
@@ -88,6 +90,15 @@ const PagenationContainer = styled.div`
   margin: 0 auto;
 `;
 
+const SimilarMemContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin: 0 auto;
+  background: #49446b;
+  max-width: 900px;
+`;
+
 const MemberDetailPage = (props) => {
   const location = useLocation();
   const memberId = location.state.data;
@@ -96,10 +107,14 @@ const MemberDetailPage = (props) => {
   const [bills, setBills] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
-  
+  // 유사 의원 추천
+  const [similar, setSimilar] = useState([]);
+  // spinner
+  const [spinner, setSpinner] = useState([]);
+
   useEffect(() => {
     axios.get(`/api/member/${memberId}`).then((response) => {
-      console.log(response);
+      //console.log(response);
       if (response.data.success) {
         setMember(response.data.member);
       }
@@ -114,78 +129,126 @@ const MemberDetailPage = (props) => {
     });
   }, [pageNum, memberId]);
 
+  useEffect(() => {
+    setSpinner(true);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/api/member/${memberId}/similar`);
+        setSimilar(response.data.members);
+        console.log(response.data.members);
+        setSpinner(false);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, [memberId]);
+
   const BillCardList = bills.map((bill) => {
     return <BillCard key={bill.id} content={bill} />;
   });
 
-  return ( member &&
-    <PageContainer className="container">
-      {/* 의원 정보 */}
-      <Title>■ 의원 정보</Title>
-      <Row style={{margin: '20px auto', padding: '50px 0', maxWidth: '900px', border: '1px solid #A7A7A7'}}>
-        <Col xs={12} sm={6} style={{margin: 'auto'}}>
-          <MemberImage src={member.image || null} alt={`${member.name} 의원 사진`} />
-          <div style={{color: '#49446B', textAlign: 'center', padding: '10px 0 6px 0'}}>정당</div>
-          {member.party && <MemberParty type={member.party}>{member.party}</MemberParty>}
-        </Col>
-        <Col xs={12} sm={6} style={{}}>
-          <MemberInfoRow>
-            <MemberInfoAttr>이름</MemberInfoAttr>
-            <MemberInfoContent>{member.name}</MemberInfoContent>
-          </MemberInfoRow>
-          <MemberInfoRow>
-            <MemberInfoAttr>성별</MemberInfoAttr>
-            <MemberInfoContent>{member.gender}</MemberInfoContent>
-          </MemberInfoRow>
-          <MemberInfoRow>
-            <MemberInfoAttr>생년월일</MemberInfoAttr>
-            <MemberInfoContent>{member.bth_date}</MemberInfoContent>
-          </MemberInfoRow>
-          <MemberInfoRow>
-            <MemberInfoAttr>직책명</MemberInfoAttr>
-            <MemberInfoContent>{member.position}</MemberInfoContent>
-          </MemberInfoRow>
-          <MemberInfoRow>
-            <MemberInfoAttr>선거구</MemberInfoAttr>
-            <MemberInfoContent>{member.origin}</MemberInfoContent>
-          </MemberInfoRow>
-          <MemberInfoRow>
-            <MemberInfoAttr>전화번호</MemberInfoAttr>
-            <MemberInfoContent>{member.phone}</MemberInfoContent>
-          </MemberInfoRow>
-          <MemberInfoRow>
-            <MemberInfoAttr>이메일</MemberInfoAttr>
-            <MemberInfoContent>{member.email}</MemberInfoContent>
-          </MemberInfoRow>
-          <MemberInfoRow>
-            <MemberInfoAttr>홈페이지</MemberInfoAttr>
-            <MemberInfoContent>{member.homepage}</MemberInfoContent>
-          </MemberInfoRow>
-          <MemberInfoRow>
-            <MemberInfoAttr>대표 위원회</MemberInfoAttr>
-            <MemberInfoContent>{member.main_committee}</MemberInfoContent>
-          </MemberInfoRow>
-          <MemberInfoRow>
-            <MemberInfoAttr>소속 위원회</MemberInfoAttr>
-            <MemberInfoContent>{member.committees_array}</MemberInfoContent>
-          </MemberInfoRow>
-        </Col>    
-      </Row>
-      
-      <div style={{height: '20px'}} />
+  const similarMemCardList = similar?.map((data, index) => {
+    return <MemberCard data={data} key={index} />;
+  });
 
-    
-      <Title>■ 발의한 법안 목록</Title>
-      <BillCardContainer>
-        {BillCardList}
-      </BillCardContainer>
-      <PagenationContainer>
+  return (
+    member && (
+      <PageContainer className="container">
+        {/* 의원 정보 */}
+        <Title>■ 의원 정보</Title>
+        <Row
+          style={{
+            margin: "20px auto",
+            padding: "50px 0",
+            maxWidth: "900px",
+            border: "1px solid #A7A7A7",
+          }}
+        >
+          <Col xs={12} sm={6} style={{ margin: "auto" }}>
+            <MemberImage
+              src={member.image || null}
+              alt={`${member.name} 의원 사진`}
+            />
+            <div
+              style={{
+                color: "#49446B",
+                textAlign: "center",
+                padding: "10px 0 6px 0",
+              }}
+            >
+              정당
+            </div>
+            {member.party && (
+              <MemberParty type={member.party}>{member.party}</MemberParty>
+            )}
+          </Col>
+          <Col xs={12} sm={6} style={{}}>
+            <MemberInfoRow>
+              <MemberInfoAttr>이름</MemberInfoAttr>
+              <MemberInfoContent>{member.name}</MemberInfoContent>
+            </MemberInfoRow>
+            <MemberInfoRow>
+              <MemberInfoAttr>성별</MemberInfoAttr>
+              <MemberInfoContent>{member.gender}</MemberInfoContent>
+            </MemberInfoRow>
+            <MemberInfoRow>
+              <MemberInfoAttr>생년월일</MemberInfoAttr>
+              <MemberInfoContent>{member.bth_date}</MemberInfoContent>
+            </MemberInfoRow>
+            <MemberInfoRow>
+              <MemberInfoAttr>직책명</MemberInfoAttr>
+              <MemberInfoContent>{member.position}</MemberInfoContent>
+            </MemberInfoRow>
+            <MemberInfoRow>
+              <MemberInfoAttr>선거구</MemberInfoAttr>
+              <MemberInfoContent>{member.origin}</MemberInfoContent>
+            </MemberInfoRow>
+            <MemberInfoRow>
+              <MemberInfoAttr>전화번호</MemberInfoAttr>
+              <MemberInfoContent>{member.phone}</MemberInfoContent>
+            </MemberInfoRow>
+            <MemberInfoRow>
+              <MemberInfoAttr>이메일</MemberInfoAttr>
+              <MemberInfoContent>{member.email}</MemberInfoContent>
+            </MemberInfoRow>
+            <MemberInfoRow>
+              <MemberInfoAttr>홈페이지</MemberInfoAttr>
+              <MemberInfoContent>{member.homepage}</MemberInfoContent>
+            </MemberInfoRow>
+            <MemberInfoRow>
+              <MemberInfoAttr>대표 위원회</MemberInfoAttr>
+              <MemberInfoContent>{member.main_committee}</MemberInfoContent>
+            </MemberInfoRow>
+            <MemberInfoRow>
+              <MemberInfoAttr>소속 위원회</MemberInfoAttr>
+              <MemberInfoContent>{member.committees_array}</MemberInfoContent>
+            </MemberInfoRow>
+          </Col>
+        </Row>
+
+        <div style={{ height: "20px" }} />
+
+        <Title>■ 발의한 법안 목록</Title>
+        <BillCardContainer>{BillCardList}</BillCardContainer>
+        <PagenationContainer>
           {/*페이지네이션*/}
           <Paginate page={pageNum} setPage={setPageNum} totalPage={totalPage} />
         </PagenationContainer>
-      <div style={{height: '100px'}} />
-    </PageContainer>
-  )
-}
+        <div style={{ height: "60px" }} />
+        {spinner ? (
+          <Spinner />
+        ) : (
+          <>
+            <Title>■ 유사한 의원 조회</Title>
+            <SimilarMemContainer>{similarMemCardList}</SimilarMemContainer>
+          </>
+        )}
+
+        <div style={{ height: "100px" }} />
+      </PageContainer>
+    )
+  );
+};
 
 export default MemberDetailPage;
