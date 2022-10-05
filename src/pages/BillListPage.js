@@ -17,7 +17,9 @@ const BillPageContainer = styled.div`
 const CategoryList = styled.div`
   display: flex;
   flex-wrap: wrap;
-  height: 250px;
+  justify-content: center;
+  align-items: center;
+  height: auto;
   background: #edf4fa;
   padding: 30px 30px;
 `;
@@ -28,6 +30,7 @@ const CategoryBox = styled.div`
   justify-content: center;
   align-items: center;
   padding: 30px 30px;
+  margin: 0 250px;
 `;
 
 const SelectSortContaier = styled.div`
