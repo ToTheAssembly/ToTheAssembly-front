@@ -26,7 +26,11 @@ const SimilarMemberList = (props) => {
       <MemberContainer>
         <Row>
           {sliceContent?.map((data, index) => {
-            return <SimilarMemberCard data={data} key={index} />;
+            return data !== null ? (
+              <SimilarMemberCard data={data} key={index} />
+            ) : (
+              <></>
+            );
           })}
         </Row>
       </MemberContainer>
