@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Tag from "../components/Common/Tag";
-import { faBreadSlice, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -296,7 +296,8 @@ const MainPage = ({ history }) => {
             <Col xs={12} sm={6} style={{}}>
               <TrendContainer>
                 <SubTitle type={"trend-title"}>트렌드 분석 ▶▶</SubTitle>
-                <ContentText type={"recency-text"}>토픽 분석</ContentText>
+                <div style={{ height: "30px" }} />
+                <img width={413} height={330} src={require("../image/topic_2022-08.png")} alt="토픽 트렌드" />
               </TrendContainer>
             </Col>
           </Row>
