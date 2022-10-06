@@ -1,7 +1,10 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
 import styled from "styled-components";
 import MemberNetwork from '../components/MemberNetwork';
 import MemberNetworkD3 from '../components/MemberNetworkD3';
+import CustomSlider from './CustomSlider';
 
 
 const PageContainer = styled.div`
@@ -21,6 +24,7 @@ const Title = styled.div`
 // 트렌드 분석
 const TrendFrame = styled.div`
     background: #EDF4FA;
+    text-align: center;
     width: 1000px;
     height: 600px;
 `
@@ -33,11 +37,34 @@ const NetworkFrame = styled.div`
 `
 
 const TrendPage = () => {
+  const [trendTopics, setTrendTopics] = useState([]);
+  const [trendValues, setTrendValues] = useState([]);
+  const [month, setMonth] = useState("08");
+  const [year, setYear] = useState("2022");
+  const [monthValue, setMonthValue] = useState(8);
+
+  useEffect(() => {
+    
+    axios.get(`/api/trend/${year}-${month}`).then((response) => {
+      if (response.data.success) {
+        setTrendTopics(response.data.topics);
+        setTrendValues(response.data.values);
+      }
+    });
+  }, [year, month]);
+
+  const handleChange = (newValue) => {
+    setMonthValue(newValue);
+    let newMonth = monthValue >= 10 ? monthValue : '0' + monthValue; // 두글자면 그대로 한글자면 앞에 0붙여서
+    setMonth(newMonth);
+  }
+
   return (
     <PageContainer>
       <Title>토픽 트렌드</Title>
       <TrendFrame>
-        {true && <MemberNetworkD3 />}
+        <CustomSlider parentSetValue={handleChange} />
+        {true && <MemberNetworkD3 topics={trendTopics} values={trendValues} year={year} month={monthValue} />}
       </TrendFrame>
       <Title>의원 네트워크</Title>
       <NetworkFrame>

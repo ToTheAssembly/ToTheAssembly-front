@@ -1,27 +1,27 @@
-import { text } from 'd3';
+import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 const d3 = require("d3");
 
-const MemberNetworkD3 = ( {props} ) => {
+const MemberNetworkD3 = ( props ) => {
   const width = 240;
   const height = 240;
-
   const svgRef = useRef();
 
-  const [graph, setGraph] = useState({
-    nodes: [
+  const [nodes, setNodes] = useState([
       { id: 0, color: "#49446B", textColor: "white", size: 28, label: "2022년 8월" },
-      { id: 1, color: "#B9C5EB", size: 18, label: "환경", amount: 32 },
+      { id: 1, color: "#B9C5EB", size: 17, label: "환경", amount: 32 },
       { id: 2, color: "#B9C5EB", size: 16, label: "재활용", amount: 28 },
       { id: 3, color: "#B9C5EB", size: 12, label: "탄소", amount: 27 },
-      { id: 4, size: 12 },
-      { id: 5, size: 12 },
-      { id: 6, size: 12 },
-      { id: 7, size: 10 },
-      { id: 8, size: 10 },
-      { id: 9, size: 10 }
-    ],
-    links: [
+      { id: 4, size: 12, label: "키워드" },
+      { id: 5, size: 12, label: "키워드" },
+      { id: 6, size: 12, label: "키워드" },
+      { id: 7, size: 10, label: "키워드" },
+      { id: 8, size: 10, label: "키워드" },
+      { id: 9, size: 10, label: "키워드" }
+    ]);
+
+  const [links, setLinks] = useState([
+    
       { source: 0, target: 0 },
       { source: 1, target: 0 },
       { source: 2, target: 0 },
@@ -31,9 +31,16 @@ const MemberNetworkD3 = ( {props} ) => {
       { source: 6, target: 0 },
       { source: 7, target: 0 },
       { source: 8, target: 0 },
-      { source: 9, target: 0 },
-    ]
-  });
+      { source: 9, target: 0 }
+  ]);
+
+
+  useEffect(() => {
+    let newNodes = [...nodes, nodes[0]["label"]=`${props.year}년 ${props.month}월`];
+    console.log(newNodes);
+    //setNodes(newNodes);
+  }, [nodes, props.month, props.year]);
+
 
   function clamp(x, lo, hi) {
     return x < lo ? lo : x > hi ? hi : x;
@@ -42,19 +49,19 @@ const MemberNetworkD3 = ( {props} ) => {
 
   useEffect(() => {
     const svg = d3.select(svgRef.current)
-    .attr("viewBox", [30, 40, width, height])
+    .attr("viewBox", [0, 60, width, height])
     
     const link = svg.selectAll(".link")
-        .data(graph.links)
+        .data(links)
         .join("line")
         .classed("link", true)
     const node = svg.selectAll(".node")
-        .data(graph.nodes)
+        .data(nodes)
         .join("circle")
         .attr("r", 7)
         .classed("node", true)
     const label = svg.selectAll(".label")
-        .data(graph.nodes)
+        .data(nodes)
         .join("text")
         .classed("text", true)
         .attr("dy", -2)
@@ -62,7 +69,7 @@ const MemberNetworkD3 = ( {props} ) => {
         .text(d => d.label)
         ;
     const amount = svg.selectAll(".amount")
-        .data(graph.nodes)
+        .data(nodes)
         .join("text")
         .classed("text", true)
         .attr("dy", -8)
@@ -74,10 +81,10 @@ const MemberNetworkD3 = ( {props} ) => {
   
     const simulation = d3
       .forceSimulation()
-      .nodes(graph.nodes)
+      .nodes(nodes)
       .force("charge", d3.forceManyBody())
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("link", d3.forceLink(graph.links))
+      .force("link", d3.forceLink(links))
       .on("tick", tick);
   
     const drag = d3
@@ -129,11 +136,11 @@ const MemberNetworkD3 = ( {props} ) => {
       d.fy = clamp(event.y, 0, height);
     }
     function dragend(event, d) {
-      simulation.alphaTarget(0.9);
+      simulation.alphaTarget(0.3);
       d.fx = null;
       d.fy = null;
     }
-  }, [graph.links, graph.nodes]);
+  }, [links, nodes]);
 
     return (
       <div>
