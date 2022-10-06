@@ -17,7 +17,8 @@ const MemberNetworkD3 = ( props ) => {
       { id: 6, size: 12, label: "키워드" },
       { id: 7, size: 10, label: "키워드" },
       { id: 8, size: 10, label: "키워드" },
-      { id: 9, size: 10, label: "키워드" }
+      { id: 9, size: 10, label: "키워드" },
+      { id: 10, size: 10, label: "키워드" }
     ]);
 
   const [links, setLinks] = useState([
@@ -31,7 +32,8 @@ const MemberNetworkD3 = ( props ) => {
       { source: 6, target: 0 },
       { source: 7, target: 0 },
       { source: 8, target: 0 },
-      { source: 9, target: 0 }
+      { source: 9, target: 0 },
+      { source: 10, target: 0 }
   ]);
 
   let graph = {
@@ -39,15 +41,19 @@ const MemberNetworkD3 = ( props ) => {
     links
   };
 
-  function setNodeId(node) {
-    return node.id;
-  }
-
-
   useEffect(() => {
     let newNodes = [...nodes];
     newNodes[0]["label"]=`${props.year}년 ${props.month}월`;
-    console.log(newNodes);
+
+    // console.log(props.labels);
+    // console.log(props.amounts);
+
+    for(let i=1; i<11; i++) {
+      newNodes[i].label = props.labels[i-1];
+      newNodes[i].amount = Math.floor(props.amounts[i-1] * 100);
+    }
+
+    // console.log(newNodes);
     setNodes(newNodes);
   }, [props.month, props.year]);
 

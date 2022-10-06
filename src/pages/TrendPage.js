@@ -37,20 +37,20 @@ const NetworkFrame = styled.div`
 `
 
 const TrendPage = () => {
-  const [trendTopics, setTrendTopics] = useState([]);
-  const [trendValues, setTrendValues] = useState([]);
+  const [trendLabels, setTrendLabels] = useState([]);
+  const [trendAmounts, setTrendAmounts] = useState([]);
   const [month, setMonth] = useState("08");
   const [year, setYear] = useState("2022");
   const [monthValue, setMonthValue] = useState(8);
 
   useEffect(() => {
     
-    // axios.get(`/api/trend/${year}-${month}`).then((response) => {
-    //   if (response.data.success) {
-    //     setTrendTopics(response.data.topics);
-    //     setTrendValues(response.data.values);
-    //   }
-    // });
+    axios.get(`/api/trend/${year}-${month}`).then((response) => {
+      if (response.data.success) {
+        setTrendLabels(response.data.topics);
+        setTrendAmounts(response.data.values);
+      }
+    });
   }, [year, month]);
 
   const handleChange = (newValue) => {
@@ -64,7 +64,7 @@ const TrendPage = () => {
       <Title>토픽 트렌드</Title>
       <TrendFrame>
         <CustomSlider parentSetValue={handleChange} />
-        {true && <MemberNetworkD3 topics={trendTopics} values={trendValues} year={year} month={monthValue} />}
+        {true && <MemberNetworkD3 labels={trendLabels} amounts={trendAmounts} year={year} month={monthValue} />}
       </TrendFrame>
       <Title>의원 네트워크</Title>
       <NetworkFrame>
