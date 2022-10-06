@@ -7,7 +7,7 @@ const MemberNetworkD3 = ( props ) => {
   const svgRef = useRef();
 
   const [nodes, setNodes] = useState([
-      { id: 0, color: "#49446B", textColor: "white", size: 28, label: "2022년 8월" },
+      { id: 0, color: "#49446B", textColor: "white", size: 30, label: "2022년 8월" },
       { id: 1, color: "#B9C5EB", size: 17, label: "환경", amount: 32 },
       { id: 2, color: "#B9C5EB", size: 16, label: "재활용", amount: 28 },
       { id: 3, color: "#B9C5EB", size: 12, label: "탄소", amount: 27 },
@@ -40,28 +40,31 @@ const MemberNetworkD3 = ( props ) => {
     links
   };
 
-  useEffect(() => {
-    let newNodes = [...nodes];
-    newNodes[0]["label"]=`${props.year}년 ${props.month}월`;
-
-    // console.log(props.labels);
-    // console.log(props.amounts);
-
-    for(let i=1; i<11; i++) {
-      newNodes[i].label = props.labels[i-1];
-      newNodes[i].amount = Math.floor(props.amounts[i-1] * 100);
-    }
-
-    // console.log(newNodes);
-    setNodes(newNodes);
-  }, [props.month, props.year]);
-
-
   function clamp(x, lo, hi) {
     return x < lo ? lo : x > hi ? hi : x;
   };
 
+  // 날짜 선택 시 날짜 변경 렌더링
+  useEffect(() => {
+    let newNodes = [...nodes];
+    newNodes[0]["label"]=`${props.year}년 ${props.month}월`;
+    setNodes(newNodes);
+  }, [props.month, props.year]);
 
+  // 날짜 선택 시 키워드 변경 렌더링
+  useEffect(() => {
+    let newNodes = [...nodes];
+    // console.log(props.labels);
+    // console.log(props.amounts);
+    for(let i=1; i<11; i++) {
+      newNodes[i].label = props.labels[i-1];
+      newNodes[i].amount = Math.floor(props.amounts[i-1] * 100);
+    }
+    // console.log(newNodes);
+    setNodes(newNodes);
+  }, [props.amounts, props.labels]);
+
+  // D3.js 그래프
   useEffect(() => {
     const svg = d3.select(svgRef.current)
     .attr("viewBox", [0, 60, width, height])
