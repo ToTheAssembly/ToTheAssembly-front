@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 const d3 = require("d3");
 
@@ -66,6 +65,7 @@ const MemberNetworkD3 = ( props ) => {
   useEffect(() => {
     const svg = d3.select(svgRef.current)
     .attr("viewBox", [0, 60, width, height])
+    
     svg.selectAll("text").remove();
 
     const link = svg.selectAll(".link")
