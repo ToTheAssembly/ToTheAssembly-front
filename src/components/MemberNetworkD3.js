@@ -34,12 +34,22 @@ const MemberNetworkD3 = ( props ) => {
       { source: 9, target: 0 }
   ]);
 
+  let graph = {
+    nodes,
+    links
+  };
+
+  function setNodeId(node) {
+    return node.id;
+  }
+
 
   useEffect(() => {
-    let newNodes = [...nodes, nodes[0]["label"]=`${props.year}년 ${props.month}월`];
+    let newNodes = [...nodes];
+    newNodes[0]["label"]=`${props.year}년 ${props.month}월`;
     console.log(newNodes);
-    //setNodes(newNodes);
-  }, [nodes, props.month, props.year]);
+    setNodes(newNodes);
+  }, [props.month, props.year]);
 
 
   function clamp(x, lo, hi) {
@@ -50,18 +60,19 @@ const MemberNetworkD3 = ( props ) => {
   useEffect(() => {
     const svg = d3.select(svgRef.current)
     .attr("viewBox", [0, 60, width, height])
-    
+    svg.selectAll("text").remove();
+
     const link = svg.selectAll(".link")
-        .data(links)
+        .data(graph.links)
         .join("line")
         .classed("link", true)
     const node = svg.selectAll(".node")
-        .data(nodes)
+        .data(graph.nodes)
         .join("circle")
         .attr("r", 7)
         .classed("node", true)
     const label = svg.selectAll(".label")
-        .data(nodes)
+        .data(graph.nodes)
         .join("text")
         .classed("text", true)
         .attr("dy", -2)
@@ -69,7 +80,7 @@ const MemberNetworkD3 = ( props ) => {
         .text(d => d.label)
         ;
     const amount = svg.selectAll(".amount")
-        .data(nodes)
+        .data(graph.nodes)
         .join("text")
         .classed("text", true)
         .attr("dy", -8)
@@ -81,10 +92,10 @@ const MemberNetworkD3 = ( props ) => {
   
     const simulation = d3
       .forceSimulation()
-      .nodes(nodes)
+      .nodes(graph.nodes)
       .force("charge", d3.forceManyBody())
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("link", d3.forceLink(links))
+      .force("link", d3.forceLink(graph.links).id(d => d.index))
       .on("tick", tick);
   
     const drag = d3
@@ -140,7 +151,7 @@ const MemberNetworkD3 = ( props ) => {
       d.fx = null;
       d.fy = null;
     }
-  }, [links, nodes]);
+  }, [graph.links, graph.nodes, links, nodes]);
 
     return (
       <div>

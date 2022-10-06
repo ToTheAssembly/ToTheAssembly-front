@@ -45,12 +45,12 @@ const TrendPage = () => {
 
   useEffect(() => {
     
-    axios.get(`/api/trend/${year}-${month}`).then((response) => {
-      if (response.data.success) {
-        setTrendTopics(response.data.topics);
-        setTrendValues(response.data.values);
-      }
-    });
+    // axios.get(`/api/trend/${year}-${month}`).then((response) => {
+    //   if (response.data.success) {
+    //     setTrendTopics(response.data.topics);
+    //     setTrendValues(response.data.values);
+    //   }
+    // });
   }, [year, month]);
 
   const handleChange = (newValue) => {
