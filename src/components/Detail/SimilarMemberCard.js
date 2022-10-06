@@ -27,18 +27,27 @@ const Summary = styled.div`
   font-family: Pretendard;
 `;
 
+const NullBill = styled.div`
+  color: white;
+  font-size: 20px;
+  font-family: Pretendard;
+`;
+
 const SimilarMemberCard = (props) => {
   const data = props.data;
   const bill = data.bill;
 
-  // 태그가 없을 때
-  const tag = bill.hashtag || null;
   let tagArray = [];
 
-  // tag가 있을 때
-  if (tag !== null) {
-    tagArray = tag.split("#");
-    tagArray.shift();
+  // 태그가 없을 때
+  if (bill !== null) {
+    const tag = bill.hashtag || null;
+
+    // tag가 있을 때
+    if (tag !== null) {
+      tagArray = tag.split("#");
+      tagArray.shift();
+    }
   }
 
   return (
@@ -49,18 +58,24 @@ const SimilarMemberCard = (props) => {
             <MemberCard data={data} />
           </Col>
           <Col>
-            <ContentBox>
-              <Summary>{bill.title}</Summary>
-              <TagBox>
-                {tagArray.length !== 0 ? (
-                  tagArray.map((tag) => {
-                    return <Tag key={tag} hashtag={tag} />;
-                  })
-                ) : (
-                  <div></div>
-                )}
-              </TagBox>
-            </ContentBox>
+            {bill ? (
+              <ContentBox>
+                <Summary>{bill.title}</Summary>
+                <TagBox>
+                  {tagArray.length !== 0 ? (
+                    tagArray.map((tag) => {
+                      return <Tag key={tag} hashtag={tag} />;
+                    })
+                  ) : (
+                    <div></div>
+                  )}
+                </TagBox>
+              </ContentBox>
+            ) : (
+              <ContentBox>
+                <NullBill>대표로 발의한 의안이 없습니다.</NullBill>
+              </ContentBox>
+            )}
           </Col>
         </Row>
       </MemberContainer>
