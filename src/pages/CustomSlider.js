@@ -103,7 +103,7 @@ const CustomSlider = ( props ) => {
         <ThemeProvider theme={muiTheme}>
         <Slider 
             aria-label="date"
-            style={{ width: "900px", marginTop: "40px", fontSize: "30px" }}
+            style={{ width: "600px", marginTop: "30px", fontSize: "30px" }}
             defaultValue={8}
             valueLabelDisplay="off"
             onChange={handleChange}
