@@ -148,9 +148,9 @@ const BillListPage = () => {
   const mainCategory = ["공법", "사법", "사회법", "기타"];
 
   // 중분류
-  const midCatPublic = ["행정법", "형법"]; // 공법
-  const midCatPrivate = ["민법", "상법"]; // 사법
-  const midCatSocial = ["노동법", "경제법", "사회보장기본법"]; // 사회법
+  const midCatPublic = ["행정", "범죄ㆍ형벌"]; // 공법
+  const midCatPrivate = ["민법", "경영·상거래"]; // 사법
+  const midCatSocial = ["노동", "경제", "사회보장기본"]; // 사회법
   const midCatOthers = [
     "부패·동물·의약품·유해물질·위생",
     "정보보호·인터넷·저작권",
@@ -234,19 +234,19 @@ const BillListPage = () => {
     let temp;
     let others = false;
 
-    if (eventKey === "행정법") {
+    if (eventKey === "행정") {
       temp = subCatAdmin;
-    } else if (eventKey === "형법") {
+    } else if (eventKey === "범죄ㆍ형벌") {
       temp = subCatCriminal;
     } else if (eventKey === "민법") {
       temp = subCatCivil;
-    } else if (eventKey === "상법") {
+    } else if (eventKey === "경영·상거래") {
       temp = subCatCommercial;
-    } else if (eventKey === "노동법") {
+    } else if (eventKey === "노동") {
       temp = subCatLabor;
-    } else if (eventKey === "경제법") {
+    } else if (eventKey === "경제") {
       temp = subCatEconomic;
-    } else if (eventKey === "사회보장기본법") {
+    } else if (eventKey === "사회보장기본") {
       temp = subCatSocialguarantee;
     } else {
       setSearchCat(eventKey);
