@@ -5,7 +5,9 @@ import styled from "styled-components";
 import MemberNetwork from '../components/MemberNetwork';
 import MemberNetworkD3 from '../components/MemberNetworkD3';
 import CustomSlider from './CustomSlider';
-
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
+import { style } from 'd3';
 
 const PageContainer = styled.div`
   margin: 0 auto;
@@ -21,13 +23,26 @@ const Title = styled.div`
     font-weight: bold;
 `
 
-// 트렌드 분석
+// 토픽 트렌드 분석
 const TrendFrame = styled.div`
     background: #EDF4FA;
     text-align: center;
     width: 1000px;
     height: 600px;
 `
+const DateContainer = styled.div`
+    display: flex;
+    justify-content: center;
+`
+const YearContainer = styled.div`
+    width: 120px;
+    margin: 30px 40px 0 0;
+    font-size: 20px;
+`
+
+const options = [
+  '2020', '2021', '2022'
+];
 
 // 의원 네트워크
 const NetworkFrame = styled.div`
@@ -59,11 +74,20 @@ const TrendPage = () => {
     setMonth(newMonth);
   }
 
+  const onYearChange = (e) => {
+    setYear(e.value);
+  }
+
   return (
     <PageContainer>
       <Title>토픽 트렌드</Title>
       <TrendFrame>
-        <CustomSlider parentSetValue={handleChange} />
+        <DateContainer>
+          <YearContainer>
+            <Dropdown options={options} onChange={onYearChange} value={year} placeholder="연도" />
+          </YearContainer>
+          <CustomSlider parentSetValue={handleChange} />
+        </DateContainer>
         {true && <MemberNetworkD3 labels={trendLabels} amounts={trendAmounts} year={year} month={monthValue} />}
       </TrendFrame>
       <Title>의원 네트워크</Title>
