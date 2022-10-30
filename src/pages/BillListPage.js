@@ -326,7 +326,11 @@ const BillListPage = () => {
           </CategoryBox>
           {/*search category button*/}
           {subTitle === "소분류" ? (
-            <SearchCategoryBtn to={"#"} state={searchCat}>
+            <SearchCategoryBtn
+              to={"#"}
+              state={searchCat}
+              onClick={() => alert("카테고리를 모두 선택한 뒤 검색해주세요.")}
+            >
               카테고리 검색 &nbsp;
               <FontAwesomeIcon icon={faSearch} />
             </SearchCategoryBtn>
