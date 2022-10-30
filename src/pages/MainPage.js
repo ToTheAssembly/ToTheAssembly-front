@@ -8,10 +8,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import logo_white_500 from "../image/logo_white_500.png";
 
 const SearchBackground = styled.div`
   height: 480px;
   background: #edf4fa;
+`;
+
+const SearchImage = styled.div`
+  background-image: url(${logo_white_500});
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
 `;
 
 const SearchContainer = styled.div`
@@ -249,19 +257,25 @@ const MainPage = ({ history }) => {
     true && (
       <>
         <SearchBackground>
-          <SearchContainer>
-            <Input
-              type="text"
-              placeholder="검색어를 입력하세요"
-              onChange={changeWord}
-            />
-            <SearchButton to={`/search/${word}`}>
-              <FontAwesomeIcon icon={faSearch} color="black" fontSize="26px" />
-            </SearchButton>
-            <InputUnderLine />
+          <SearchImage>
+            <SearchContainer>
+              <Input
+                type="text"
+                placeholder="검색어를 입력하세요"
+                onChange={changeWord}
+              />
+              <SearchButton to={`/search/${word}`}>
+                <FontAwesomeIcon
+                  icon={faSearch}
+                  color="black"
+                  fontSize="26px"
+                />
+              </SearchButton>
+              <InputUnderLine />
 
-            <TagBox>{hashtag && TagList}</TagBox>
-          </SearchContainer>
+              <TagBox>{hashtag && TagList}</TagBox>
+            </SearchContainer>
+          </SearchImage>
         </SearchBackground>
 
         <Title>의안 수 총계</Title>
